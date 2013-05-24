@@ -9,7 +9,7 @@
 					<ul class="nav nav-list">
 						<li><input type="text" id="company_name" class="h1_input" placeholder="Your Company Name" /></li>
 						<li>Registration number: <input class="shorter" id="company_reg" type="text" placeholder="00000000000" /></li>
-						<li class="hasVat">VAT number: <input class="shorter" type="text" placeholder="00000000000" /></li>
+						<li class="hasVat">VAT number: <input class="shorter" id="company_vat"  type="text" placeholder="00000000000" /></li>
 					</ul>
 				</div>
 				<div class="span3">
@@ -53,17 +53,17 @@
 					<tr id="lastRow">
 						<td><a id="addRow" class="navigable btn btn-small"/><i class="icon-plus"></i> Add Item</a></td>
 						<td/><td><span class="hasVat">Subtotal</span></td>
-						<td><input id="subtotal" type="text" class="navigable number hasVat"/></td>
+						<td><input id="invoice_subtotal" type="text" class="navigable number hasVat"/></td>
 					</tr>
 					<tr>
 						<td/><td/>
-						<td><span class="hasVat">VAT <input id="vat_rate" class="navigable sensitive number" type="text" /></span></td>
-						<td><input type="text" id="vat" class="navigable number hasVat" /></td>
+						<td><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /></span></td>
+						<td><input type="text" id="invoice_vat" class="navigable number hasVat" /></td>
 					</tr>
 					<tr>
 						<td/><td/>
 						<td>Total</td>
-						<td><input type="text" id="total" class="navigable number"  /></td>
+						<td><input type="text" id="invoice_total" class="navigable number"  /></td>
 					</tr>
 				</table>
 				

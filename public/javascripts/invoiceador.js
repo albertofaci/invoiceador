@@ -1,18 +1,21 @@
 $(document).ready(function () {
 
-    var sheet = new InvoiceSheet();
-    sheet.hasVat = true;
-    sheet.items[0] = new InvoiceItem("", 0, 0);
-    $(generateRow(0)).insertBefore('#lastRow');
+    var invoiceProperties = {};
+    invoiceProperties["hasVat"] = true;
+    invoiceProperties["currency"] = "gbp";
+    invoiceProperties["shortid"] = $('#shortid').val();
+
 
     refreshButtons();
-    refreshNumbers(sheet);
+    refreshNumbers(invoiceProperties);
+    initializeInvoiceadorForm(invoiceProperties);
 
     $('a.prevent-default').click(function(e) {
         e.preventDefault();
     });
 
-    initializeInvoiceadorForm(sheet);
+    $(generateRow(0)).insertBefore('#lastRow');
+    
 
     $(document).scroll(function(){
         var elem = $('.alberto-nav');
@@ -34,19 +37,19 @@ $(document).ready(function () {
 
 
     $('.save').click(function() {
-        var payload = collectPayload(sheet);
+        var payload = collectPayload(invoiceProperties);
 
-        if(sheet.shortid) {
+        if(invoiceProperties.shortid) {
             $.ajax({
                 type: "PUT",
-                url: "/invoices/"+sheet.shortid,
+                url: "/invoices/"+invoiceProperties.shortid,
                 // The key needs to match your method's input parameter (case-sensitive).
                 data: payload,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
                     $('body').fadeOut('fast', function() {
-                        window.location.href = "/"+sheet.shortid;
+                        window.location.href = "/"+invoiceProperties.shortid;
                     });
                 },
                 failure: function(errMsg) {
@@ -71,38 +74,24 @@ $(document).ready(function () {
                     alert("The invoice could not be recorded due to an error. Try again later");
                 }
             });
-
         }
-
-       
     });
 
 
+    if(invoiceProperties.shortid) {
     
-
-
-    function loadIfNecessary(hash) {
-
             $.ajax({
                 type: "GET",
-                url: "/invoices/"+hash,
-                // The key needs to match your method's input parameter (case-sensitive).
+                url: "/invoices/"+invoiceProperties.shortid,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data){
-                    alert(data+" "+data.number)
+                   populatePayload(data, invoiceProperties);
                 },
                 failure: function(errMsg) {
                     alert("The invoice could not be retrieved due to an error. Try again later");
                 }
             });
-
     }
-
-      $('#load').click(function() {
-            var hash = $(this).data("hash");
-            alert('load is '+hash)
-            loadIfNecessary(hash);
-      });
 
 });

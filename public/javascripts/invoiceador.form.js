@@ -38,7 +38,7 @@ $(document).ready(function () {
 var moneyPattern = /^\d+(,\d{3})*(\.\d*)?$/;
 var numberPattern = /^\d+$/;
 
-function initializeInvoiceadorForm(sheet_) {
+function initializeInvoiceadorForm(invoiceProperties) {
 
  	$('#invoice_date').val(getTodayDate());
     $('.datepicker').datepicker();
@@ -47,7 +47,7 @@ function initializeInvoiceadorForm(sheet_) {
     
    $('#fields').delegate('.price', 'blur', function() {
          $(this).data('value', $(this).val());
-         $(this).formatCurrency({region: sheet_.currency});
+         $(this).formatCurrency({region: invoiceProperties.currency});
    });
    $('#fields').delegate('.price', 'focus', function() {
          $(this).val($(this).data('value'))
@@ -76,12 +76,12 @@ function initializeInvoiceadorForm(sheet_) {
     
     $('#fields').delegate('.sensitive', 'keyup', function() {
         $(this).data('value', $(this).val());
-        refreshNumbers(sheet_);
+        refreshNumbers(invoiceProperties);
     });
 
     $('#addRow').click(function () {
         $(generateRow(findNextRownum())).insertBefore('#lastRow');
-        refreshButtons(sheet_);
+        refreshButtons(invoiceProperties);
     });
         
     /** Object synch delegates **/
@@ -91,12 +91,12 @@ function initializeInvoiceadorForm(sheet_) {
     $('#fields').delegate('.itemField', 'keyup', function() {
         var fieldName = $(this).data('field-name');
         var rownum = $(this).closest('tr').data('rownum');
-        sheet_.items[rownum][fieldName] = $(this).val();
+        //sheet_.items[rownum][fieldName] = $(this).val();
     });
 
-    $('#addRow').click(function () {
-        sheet_.items.push(new InvoiceItem("", 0, 0)) 
-    });
+    //$('#addRow').click(function () {
+    //    sheet_.items.push(new InvoiceItem("", 0, 0)) 
+    //});
     
     /** Navigation **/
 
@@ -129,15 +129,15 @@ function initializeInvoiceadorForm(sheet_) {
     /** VAT toggling **/
     $('#hasVat').click(function () {
         $(".hasVat").toggle(this.checked);
-        sheet_.hasVat = this.checked;
-        refreshNumbers(sheet_);
+        invoiceProperties.hasVat = this.checked;
+        refreshNumbers(invoiceProperties);
     });
     
     /** Currency **/
     $('#currencySelect').change(function() {
         $("#currencySelect option:selected").each(function () {
-           sheet_.currency = $(this).val();
-            refreshNumbers(sheet_);
+           invoiceProperties.currency = $(this).val();
+            refreshNumbers(invoiceProperties);
        }); 
     });
 
@@ -168,7 +168,7 @@ function getTodayDate() {
 }
 
 
-function refreshNumbers(sheet_) {
+function refreshNumbers(invoiceProperties) {
     
     $(".amount").each(function () {
         var index = $(this).closest('tr').data("rownum");
@@ -178,7 +178,7 @@ function refreshNumbers(sheet_) {
             var amount = round(qty * price);
             $(this).data('value', amount);
             $(this).val(amount);    
-            $(this).formatCurrency({region: sheet_.currency}); 
+            $(this).formatCurrency({region: invoiceProperties.currency}); 
         } else {
             $(this).val("");
         }
@@ -189,29 +189,29 @@ function refreshNumbers(sheet_) {
     $.each($('.amount'), function () {
         subtotal += round($(this).data('value')) || 0.0;
     });
-    sheet_.subtotal = subtotal
-    $('#subtotal').data('value', subtotal);
-    $('#subtotal').val(subtotal);
-    $('#subtotal').formatCurrency({region: sheet_.currency}); 
 
-    var vat_rate = convert($('#vat_rate'), numberPattern);
+    $('#invoice_subtotal').data('value', subtotal);
+    $('#invoice_subtotal').val(subtotal);
+    $('#invoice_subtotal').formatCurrency({region: invoiceProperties.currency}); 
+
+    var vat_rate = convert($('#invoice_vat_rate'), numberPattern);
 
    
-    if(sheet_.hasVat) {
+    if(invoiceProperties.hasVat) {
         var vat = round(subtotal * vat_rate / 100);
-        sheet_.vat = vat;
-        $('#vat').data('value', vat)
-        $('#vat').val(vat);
-        $('#vat').formatCurrency({region: sheet_.currency}); 
+        //sheet_.vat = vat;
+        $('#invoice_vat').data('value', vat)
+        $('#invoice_vat').val(vat);
+        $('#invoice_vat').formatCurrency({region: invoiceProperties.currency}); 
     }
-    var total = sheet_.subtotal
-    if(sheet_.hasVat) {
-        total += sheet_.vat
+    var total = $('#invoice_subtotal').data('value');
+    if(invoiceProperties.hasVat) {
+        total += $('#invoice_vat').data('value');
     }
-    sheet_.total = total;
-    $('#total').data('value', total)
-    $('#total').val(total);  
-    $('#total').formatCurrency({region: sheet_.currency}); 
+    // sheet_.total = total;
+    $('#invoice_total').data('value', total)
+    $('#invoice_total').val(total);  
+    $('#invoice_total').formatCurrency({region: invoiceProperties.currency}); 
 }
 
 
@@ -276,6 +276,14 @@ function generateRow(rownum) {
         </tr>'.f(rownum);
 }
 
+function populateRow(rownum, description, qty, price, amount) {
+    $('#description'+rownum).val(description);
+    $('#qty'+rownum).val(qty);
+    $('#qty'+rownum).data('value',qty);
+    $('#price'+rownum).val(price);
+    $('#price'+rownum).data('value',price);
+}
+
 function findNextRownum() {
     var rownums = $.map($('.sheet_row'), function (it, index) {
         return $(it).data('rownum')
@@ -297,16 +305,17 @@ function moveDown(a) {
 
     
 
-  function collectPayload(sheet_) {
+  function collectPayload(invoiceProperties) {
     var items = [];
-    for(var i=0; i<sheet_.items.length; i++) {
-        var fields = new Object();;
-        fields["description"] = sheet_.items[i]["description"]
-        fields["qty"] = sheet_.items[i]["qty"]
-        fields["price"] = sheet_.items[i]["price"]
-        fields["amount"] = sheet_.items[i]["amount"]
-        items.push(fields);
-    }
+
+    $('.sheet_row').each(function() {
+         var fields = new Object();
+         fields["description"] = $(this).find("input[id^=description]").val();
+         fields["qty"] = $(this).find("input[id^=qty]").val();
+         fields["price"] = $(this).find("input[id^=price]").data("value");
+         fields["amount"] = $(this).find("input[id^=amount]").data("value");
+         items.push(fields);
+    });
    
     
     var sender = {
@@ -317,11 +326,13 @@ function moveDown(a) {
         sender["company_vat_registration"] = $('#company_vat').val()
     }
 
+    alert(JSON.stringify(sender));
+
 
     var payload = JSON.stringify({
             "number": $('#invoice_number').val(),
             "date": $('#invoice_date').val(),
-            "is_vat": sheet_.hasVat,
+            "is_vat": invoiceProperties.hasVat,
             "sender": sender,
             "recipient": {
                 "name": $('#client_name').val(),
@@ -333,15 +344,45 @@ function moveDown(a) {
                     "country":  $('#client_country').val()
                 }
             },
-            "vat_rate": sheet_.vat_rate,
+            "vat_rate": $('#invoice_vat_rate').data('value'),
             "invoice_data": {
                "items": items,
-               "subtotal": sheet_.subtotal,
-               "vat": sheet_.vat,
-               "total": sheet_.total, 
+               "subtotal": $('#invoice_subtotal').data('value'),
+               "vat": $('#invoice_vat').data('value'),
+               "total": $('#invoice_total').data('value'), 
             }
 
     });
     return payload;
+}
+
+function populatePayload(invoiceJson, invoiceProperties) {
+    $('#company_name').val(invoiceJson.sender.company_name);
+    $('#company_reg').val(invoiceJson.sender.company_registration_number);
+    $('#company_vat').val(invoiceJson.sender.company_vat_registration);
+
+    $('#invoice_number').val(invoiceJson.number);
+    $('#invoice_date').val(invoiceJson.date);
+
+    invoiceProperties.hasVat = invoiceJson.is_vat;
+
+    var i = 0;
+    $.each(invoiceJson.invoice_data.items, function(item){
+        generateRow(i);
+        populateRow(i, item.description, item.qty, item.price, item.amount);
+        i++;
+    });
+
+
+    $('#client_name').val(invoiceJson.recipient.name);
+    $('#client_address_1').val(invoiceJson.recipient.address.line1);
+    $('#client_address_2').val(invoiceJson.recipient.address.line2);
+    $('#client_town').val(invoiceJson.recipient.address.town);
+    $('#client_postcode').val(invoiceJson.recipient.address.postcode);
+    $('#client_country').val(invoiceJson.recipient.address.country);
+    $('#invoice_vat_rate').data('value', invoiceJson.vat_rate);
+
+    refreshNumbers(invoiceProperties);
+
 }
 

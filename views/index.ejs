@@ -24,6 +24,12 @@
 </head>
 <body>
 
+
+
+	<% if(hash){ %>
+		<input type="hidden" name="shortid" id="shortid" value="<%= hash %>" />
+	<% } %>
+
 	<div id="main-container" class="container">
 		<%- include header %>
 		<%- include menu %>
