@@ -326,7 +326,7 @@ function moveDown(a) {
         sender["company_vat_registration"] = $('#company_vat').val()
     }
 
-    alert(JSON.stringify(sender));
+   // alert(JSON.stringify(sender));
 
 
     var payload = JSON.stringify({

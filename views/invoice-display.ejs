@@ -1,0 +1,79 @@
+<div class="row">
+	
+		<div id="content">
+
+			<br/><br/><br/>
+			
+			<div class="row">
+				<div class="span6">
+					<ul class="nav nav-list">
+						<li><h1><%= invoice.sender.company_name %></h1></li>
+						<li>Registration number: <%= invoice.sender.company_registration_number %></li>
+						<li class="hasVat">VAT number: <%= invoice.sender.company_vat_registration %></li>
+					</ul>
+				</div>
+				<div class="span3">
+					<div class="date_section">
+						<ul class="nav nav-list">
+							<li class="nav-header nav-header-darker">Invoice Data</li>
+							<li>Invoice number: <%= invoice.number %></li>
+							<li>Date: <%= invoice.date %></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<br/><br/>
+
+			<div class="row">
+				<ul class="nav nav-list span4">
+					<li class="nav-header nav-header-darker">Invoice For</li>
+					<li><%= invoice.recipient.name %></li>
+					<li><%= invoice.recipient.address.line1 %></li>
+					<li><%= invoice.recipient.address.line2 %></li>
+					<li><%= invoice.recipient.address.town %></li>
+					<li><%= invoice.recipient.address.postcode %></li>
+					<li><%= invoice.recipient.address.country %></li>
+				</ul>
+			</div>
+
+			<br/><br/>
+
+			<div class="row">
+	
+				<table id="fields" class="table table-condensed table-borderless" width="100%">
+					<tr>
+						<th width="40%">Description</th>
+						<th class="right">Qty</th>
+						<th class="right">Price</th>
+						<th class="right">Amount</th>
+						<th width="15%" class="right actions_column">Actions</th>
+					</tr>
+					
+					<tr id="lastRow">
+						<td><a id="addRow" class="navigable btn btn-small"/><i class="icon-plus"></i> Add Item</a></td>
+						<td/><td><span class="hasVat">Subtotal</span></td>
+						<td><input id="invoice_subtotal" type="text" class="navigable number hasVat"/></td>
+					</tr>
+					<tr>
+						<td/><td/>
+						<td><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /></span></td>
+						<td><input type="text" id="invoice_vat" class="navigable number hasVat" /></td>
+					</tr>
+					<tr>
+						<td/><td/>
+						<td>Total</td>
+						<td><input type="text" id="invoice_total" class="navigable number"  /></td>
+					</tr>
+				</table>
+				
+			</div>
+
+			<div class="row">
+				<p class="nav-header nav-header-darker ">Additional Information</p>
+				<textarea id="additional_information" height="50" class="textarea"></textarea>	
+			</div>
+
+			
+		</div>
+</div>

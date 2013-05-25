@@ -49,7 +49,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function(data){
                     $('body').fadeOut('fast', function() {
-                        window.location.href = "/"+invoiceProperties.shortid;
+                        window.location.href = "/edit/"+invoiceProperties.shortid;
                     });
                 },
                 failure: function(errMsg) {
@@ -58,6 +58,7 @@ $(document).ready(function () {
             });
         }
         else {
+
             $.ajax({
                 type: "POST",
                 url: "/invoices",
@@ -65,9 +66,9 @@ $(document).ready(function () {
                 data: payload,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function(data){
+                success: function(hash){
                     $('body').fadeOut('fast', function() {
-                        window.location.href = "/"+data;
+                        window.location.href = "/edit/"+hash;
                     });
                 },
                 failure: function(errMsg) {
