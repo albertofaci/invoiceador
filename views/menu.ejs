@@ -4,10 +4,43 @@
 				<ul class="nav">
 					<li class="title"><a href="#">Invoiceador</a></li>
 					<li><a href="#" class="save prevent-default"><i class="icon-hdd"></i> Save</a></li>
-	      			<li><a href="#"><i class="icon-print"></i> Export</a></li>
-	      			<li><a href="#"><i class="icon-share"></i> Share</a></li>
-	      			<li><a href="#modal_options" data-toggle="modal"><i class="icon-wrench"></i> Options</a></li>
+	      			<li class="dropdown">
+						  <a id="share-label" class="dropdown-button" data-target="dropdownExport">
+						    <i class="icon-print"></i> Export <b class="caret"></b>
+						  </a>
+	      			</li>
+	      			 <li class="dropdown">
+                      	<a class="dropdown-button" data-target="dropdownShare">
+                      		<i class="icon-share"></i> Share <b class="caret"></b>
+                      	</a>
+                    </li>
+	      			<li class="dropdown">
+	      				<a class=" dropdown-button"  data-target="dropdownOptions">
+	      					<i class="icon-wrench"></i> Options <b class="caret"></b>
+	      				</a>
+	      			</li>
+	      			
 	      		</ul>
+			</div>
+			<div id="menu-content">
+				<div id="dropdownShare" class="dropdownCont">
+					<ul class="">
+					<li>
+						<label><span class="subtitle">Public</span> <small>(editable)</small></label>
+					 	<input type="text" class="full-width select-auto" value="http://invoiceador.com/share/xTrv93S" />
+					</li>
+					<li>
+						<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
+					 	<input type="text" class="full-width select-auto" value="http://invoiceador.com/share/00xTrv93S" />
+					</li>
+					</ul>
+				</div>
+				<div id="dropdownOptions" class="dropdownCont">
+					<ul>
+						<li><span class="subtitle">Locale:</span> UK (£)</li>
+	          			<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
+					</ul>
+				</div>
 			</div>
 	     </div>
 	</div>

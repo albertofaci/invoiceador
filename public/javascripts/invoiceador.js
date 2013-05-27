@@ -14,6 +14,32 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
+    $('.select-auto').mouseup(function(e){
+        e.preventDefault();
+    });
+    $('.select-auto').focus(function() {
+        $(this).select();
+    });
+
+
+    $('.dropdown-button').click(function() {
+        var clicked = $(this);
+        $(this).closest('li').siblings().each(function(){
+            $(this).removeClass('active'); 
+             var target = $(this).find('a').data('target');
+            $('#'+target).hide();
+           
+        });
+         $(this).siblings().each(function(){
+             var target = $(this).data('target');
+            $('#'+target).hide();
+         });
+
+        $(this).closest('li').toggleClass('active');
+        var target = $(this).data('target');
+        $('#'+target).toggle();
+    });
+
     $(generateRow(0)).insertBefore('#lastRow');
     
 
