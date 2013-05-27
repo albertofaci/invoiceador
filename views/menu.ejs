@@ -24,16 +24,20 @@
 			</div>
 			<div id="menu-content">
 				<div id="dropdownShare" class="dropdownCont">
+<% if(typeof hash != 'undefined') { %>
 					<ul class="">
 					<li>
 						<label><span class="subtitle">Public</span> <small>(editable)</small></label>
-					 	<input type="text" class="full-width select-auto" value="http://invoiceador.com/share/xTrv93S" />
+					 	<input type="text" class="full-width select-auto" value="http://localhost:3000/view/<%=hash %>"/>
 					</li>
 					<li>
 						<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-					 	<input type="text" class="full-width select-auto" value="http://invoiceador.com/share/00xTrv93S" />
+					 	<input type="text" class="full-width select-auto" value="http://localhost:3000/edit/<%=hash %>"/>
 					</li>
 					</ul>
+<% } else { %>
+					<p>You haven't saved the invoice yet!</p>
+<% } %>
 				</div>
 				<div id="dropdownOptions" class="dropdownCont">
 					<ul>
