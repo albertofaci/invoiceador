@@ -30,7 +30,7 @@ app.get('/invoices/:hash', dao.findByHash, rest.invoice);
 
 app.get('/', page.index);
 app.get('/edit/:hash', dao.hashExists, page.edit);
-app.get('/view/:hash', dao.findByHash, page.view);
+app.get('/view/:hash', dao.findByPublicHash, page.view);
 
 //RUN
 app.listen(3000);	
