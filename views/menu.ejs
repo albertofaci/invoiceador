@@ -24,7 +24,7 @@
 			</div>
 			<div id="menu-content">
 				<div id="dropdownShare" class="dropdownCont">
-<% if(typeof hash != 'undefined') { %>
+<% if(typeof invoiceObject != 'undefined') { %>
 					<ul class="">
 					<li>
 						<label><span class="subtitle">Public</span> <small>(editable)</small></label>
@@ -32,7 +32,7 @@
 					</li>
 					<li>
 						<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-					 	<input type="text" class="full-width select-auto" value="http://localhost:3000/edit/<%=hash %>"/>
+					 	<input type="text" class="full-width select-auto" value="http://localhost:3000/edit/<%=invoiceObject.private_hash %>"/>
 					</li>
 					</ul>
 <% } else { %>

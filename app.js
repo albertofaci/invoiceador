@@ -25,11 +25,11 @@ app.param("hash", params.hash);
 
 //ROUTING
 app.post('/invoices', params.new_hash, params.invoice, dao.save, rest.hash);
-app.put('/invoices/:hash', params.invoice, dao.findByHash, dao.update, rest.hash);
-app.get('/invoices/:hash', dao.findByHash, rest.invoice);
+app.put('/invoices/:hash', params.invoice, dao.findByPrivateHash, dao.update, rest.hash);
+app.get('/invoices/:hash', dao.findByPrivateHash, rest.invoice);
 
 app.get('/', page.index);
-app.get('/edit/:hash', dao.hashExists, page.edit);
+app.get('/edit/:hash', dao.existsPrivateHash, page.edit);
 app.get('/view/:hash', dao.findByPublicHash, page.view);
 
 //RUN
