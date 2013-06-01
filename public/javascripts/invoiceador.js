@@ -3,7 +3,7 @@ $(document).ready(function () {
     var invoiceProperties = {};
     invoiceProperties["hasVat"] = true;
     invoiceProperties["currency"] = "gbp";
-    invoiceProperties["shortid"] = $('#shortid').val();
+    invoiceProperties["hash"] = $('#hash').val();
 
 
     refreshButtons();
@@ -39,10 +39,8 @@ $(document).ready(function () {
         var target = $(this).data('target');
         $('#'+target).toggle();
     });
-
-    $(generateRow(0)).insertBefore('#lastRow');
     
-
+    /** sticky navbar on scroll**/
     $(document).scroll(function(){
         var elem = $('.alberto-nav');
         if (!elem.attr('data-top')) {
@@ -59,66 +57,14 @@ $(document).ready(function () {
         }
     });
 
-
-
-
+    /** Save invoice **/
     $('.save').click(function() {
         var payload = collectPayload(invoiceProperties);
-
-        if(invoiceProperties.shortid) {
-            $.ajax({
-                type: "PUT",
-                url: "/invoices/"+invoiceProperties.shortid,
-                // The key needs to match your method's input parameter (case-sensitive).
-                data: payload,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data){
-                    $('body').fadeOut('fast', function() {
-                        window.location.href = "/edit/"+invoiceProperties.shortid;
-                    });
-                },
-                failure: function(errMsg) {
-                    alert("The invoice could not be recorded due to an error. Try again later");
-                }
-            });
-        }
-        else {
-
-            $.ajax({
-                type: "POST",
-                url: "/invoices",
-                // The key needs to match your method's input parameter (case-sensitive).
-                data: payload,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(hash){
-                    $('body').fadeOut('fast', function() {
-                        window.location.href = "/edit/"+hash;
-                    });
-                },
-                failure: function(errMsg) {
-                    alert("The invoice could not be recorded due to an error. Try again later");
-                }
-            });
-        }
+         $('#payload').val(payload);
+        $('body').fadeOut('fast', function() {
+            $('#myForm').submit();
+        });
+       
     });
-
-
-    if(invoiceProperties.shortid) {
-    
-            $.ajax({
-                type: "GET",
-                url: "/invoices/"+invoiceProperties.shortid,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data){
-                   populatePayload(data, invoiceProperties);
-                },
-                failure: function(errMsg) {
-                    alert("The invoice could not be retrieved due to an error. Try again later");
-                }
-            });
-    }
 
 });

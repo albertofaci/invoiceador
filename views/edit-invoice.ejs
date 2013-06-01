@@ -7,7 +7,9 @@
 </head>
 <body>
 
+	<% if(typeof invoice !== 'undefined') { %>
 	<input type="hidden" name="shortid" id="shortid" value="<%= hash %>" />
+	<% } %>
 
 	<div id="main-container" class="container">
 		<%- include menu %>

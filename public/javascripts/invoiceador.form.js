@@ -44,6 +44,10 @@ function initializeInvoiceadorForm(invoiceProperties) {
     $('.datepicker').datepicker();
     
    /** currency formatting **/
+
+   $('.price').each(function() {
+        $(this).formatCurrency({region: invoiceProperties.currency});
+   });
     
    $('#fields').delegate('.price', 'blur', function() {
          $(this).data('value', $(this).val());
@@ -80,24 +84,15 @@ function initializeInvoiceadorForm(invoiceProperties) {
     });
 
     $('#addRow').click(function () {
-        $(generateRow(findNextRownum())).insertBefore('#lastRow');
+        var newRow = $('.sheet_row:last').clone();
+        newRow.find('.itemField').each(function() {
+            $(this).val("");
+            $(this).data('value', '')
+        })
+        newRow.insertBefore('#lastRow');
         refreshButtons(invoiceProperties);
     });
-        
-    /** Object synch delegates **/
-    
-    
-    
-    $('#fields').delegate('.itemField', 'keyup', function() {
-        var fieldName = $(this).data('field-name');
-        var rownum = $(this).closest('tr').data('rownum');
-        //sheet_.items[rownum][fieldName] = $(this).val();
-    });
 
-    //$('#addRow').click(function () {
-    //    sheet_.items.push(new InvoiceItem("", 0, 0)) 
-    //});
-    
     /** Navigation **/
 
     $('#fields').delegate('tr', 'mouseover', function() {
@@ -109,21 +104,18 @@ function initializeInvoiceadorForm(invoiceProperties) {
 
     
     $('#fields').delegate('.navigable', 'keydown', function(e) {
-         if (e.keyCode == 37) { //left 
-            $(this).closest('td').prev().find('.navigable').focus(); 
-         }
-        else if(e.keyCode == 39) { //right
-             $(this).closest('td').next().find('.navigable').focus();   
-        }
-        else if(e.keyCode == 38) { //up
-              var index = $(this).closest('td').index();
-              $($(this).closest('tr').prev().find('td')[index]).find('.navigable').focus();  
-        }
-        else if(e.keyCode == 40) { //down
-              var index = $(this).closest('td').index();
-              $($(this).closest('tr').next().find('td')[index]).find('.navigable').focus();  
-        }                  
-        
+
+        switch(e.keyCode) {
+            case 37: $(this).closest('td').prev().find('.navigable').focus();  break;
+            case 39: $(this).closest('td').next().find('.navigable').focus();  break;
+            case 38: var index = $(this).closest('td').index();
+                     $($(this).closest('tr').prev().find('td')[index]).find('.navigable').focus(); 
+                     break;
+            case 40: var index = $(this).closest('td').index(); 
+                     $($(this).closest('tr').next().find('td')[index]).find('.navigable').focus();  
+                     break;
+            default:
+        }    
     });
     
     /** VAT toggling **/
@@ -141,21 +133,6 @@ function initializeInvoiceadorForm(invoiceProperties) {
        }); 
     });
 
-	/** TODO: is this used? */
-    $('.editable').click(function() {
-        $(this).css('display', 'none');
-        var tag_template  = '<input type="text" class="feo" value="{0}"/>';
-        var input = $(tag_template.f($(this).text()));
-        $(this).after(input);
-        input.focus();
-        input.blur(function() {
-            var content = $(this).prev()
-            content.text($(this).val());
-            content.css('display', 'block');
-            $(this).remove();
-        });
-    });
-
 }
 
 function getTodayDate() {
@@ -171,9 +148,12 @@ function getTodayDate() {
 function refreshNumbers(invoiceProperties) {
     
     $(".amount").each(function () {
+        var tr = $(this).closest('tr')
         var index = $(this).closest('tr').data("rownum");
-        var qty = $('#qty' + index).data('value');
-        var price = $('#price' + index).data('value');
+        //----var rowid = $(this).closest('tr').data("rowid");
+        var qty = tr.find('.qty').data('value');
+        var price = tr.find('.price').data('value');
+
         if (qty && price) {
             var amount = round(qty * price);
             $(this).data('value', amount);
@@ -194,7 +174,7 @@ function refreshNumbers(invoiceProperties) {
     $('#invoice_subtotal').val(subtotal);
     $('#invoice_subtotal').formatCurrency({region: invoiceProperties.currency}); 
 
-    var vat_rate = convert($('#invoice_vat_rate'), numberPattern);
+    var vat_rate = $('#invoice_vat_rate').val();
 
    
     if(invoiceProperties.hasVat) {
@@ -219,21 +199,9 @@ function round(amount) {
     return Math.round(amount * 100) / 100;
 }
 
+//---- TODO: review
 function isValid(str, pattern) {
     return str.match(pattern);
-}
-
-function convert(element, pattern) {
-    if (!element.val()) {
-        element.removeClass('invalid');
-    } else if (!element.val().match(pattern)) {
-        element.addClass('invalid');
-        return null;
-    } else {
-        element.removeClass('invalid');
-    }
-    return element.val();
-
 }
 
 function refreshButtons() {
@@ -250,62 +218,11 @@ function refreshButtons() {
     $('.down').last().addClass(disabledClass);         
 }
 
-String.prototype.format = String.prototype.f = function() {
-    var s = this,
-        i = arguments.length;
 
-    while (i--) {
-        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-    }
-    return s;
-};
+function moveUp(a) { if (a.prev() != null) a.insertBefore(a.prev()) }
+function moveDown(a) { if (a.next() != null) a.insertAfter(a.next()) }
 
-function generateRow(rownum) {
-    return '<tr class="sheet_row" data-rownum="{0}"> \
-        <td><input id="description{0}" class="description navigable itemField" data-field-name="description" type="text" /></td>\
-        <td><input id="qty{0}" class="navigable sensitive number qty itemField" data-field-name="qty" type="text" /></td>\
-        <td><input id="price{0}" class="navigable sensitive number price itemField" data-field-name="price" type="text" /></td>\
-        <td><input id="amount{0}" class="navigable sensitive amount number itemField" data-field-name="amount" type="text" /></td>\
-        <td class="right">\
-            <div class="btn-group controls">\
-                <a class="up navigable btn btn-small"><i class="icon-arrow-up"></i></a>\
-                <a class="down navigable btn btn-small"><i class="icon-arrow-down"></i></a>\
-                <a class="del navigable btn btn-small btn-danger" data-index="{0}" type="button"><i class="icon-trash icon-white"></i></a>\
-                </div>\
-                </td>\
-        </tr>'.f(rownum);
-}
-
-function populateRow(rownum, description, qty, price, amount) {
-    $('#description'+rownum).val(description);
-    $('#qty'+rownum).val(qty);
-    $('#qty'+rownum).data('value',qty);
-    $('#price'+rownum).val(price);
-    $('#price'+rownum).data('value',price);
-}
-
-function findNextRownum() {
-    var rownums = $.map($('.sheet_row'), function (it, index) {
-        return $(it).data('rownum')
-    });
-    return Math.max.apply(null, rownums) + 1;
-}
-
-function moveUp(a) {
-    if (a.prev() != null) {
-        a.insertBefore(a.prev())
-    }
-}
-
-function moveDown(a) {
-    if (a.next() != null) {
-        a.insertAfter(a.next())
-    }
-}
-
-    
-
-  function collectPayload(invoiceProperties) {
+function collectPayload(invoiceProperties) {
     var items = [];
 
     $('.sheet_row').each(function() {
@@ -314,20 +231,20 @@ function moveDown(a) {
          fields["qty"] = $(this).find("input[id^=qty]").val();
          fields["price"] = $(this).find("input[id^=price]").data("value");
          fields["amount"] = $(this).find("input[id^=amount]").data("value");
-         items.push(fields);
+         if(fields["qty"] && fields["price"] && fields["description"]) {
+            items.push(fields);
+         }
+         
     });
    
     
     var sender = {
         "company_name": $('#company_name').val(),
-        "company_registration_number": $('#company_reg').val(),
+        "company_registration_number": $('#company_registration_number').val(),
     }
-    if($('#company_vat').val()) {
-        sender["company_vat_registration"] = $('#company_vat').val()
+    if($('#invoice.sender.company_vat_registration').val()) {
+        sender["company_vat_registration"] = $('#company_vat_registration').val()
     }
-
-   // alert(JSON.stringify(sender));
-
 
     var payload = JSON.stringify({
             "number": $('#invoice_number').val(),
@@ -356,33 +273,5 @@ function moveDown(a) {
     return payload;
 }
 
-function populatePayload(invoiceJson, invoiceProperties) {
-    $('#company_name').val(invoiceJson.sender.company_name);
-    $('#company_reg').val(invoiceJson.sender.company_registration_number);
-    $('#company_vat').val(invoiceJson.sender.company_vat_registration);
 
-    $('#invoice_number').val(invoiceJson.number);
-    $('#invoice_date').val(invoiceJson.date);
-
-    invoiceProperties.hasVat = invoiceJson.is_vat;
-
-    var i = 0;
-    $.each(invoiceJson.invoice_data.items, function(item){
-        generateRow(i);
-        populateRow(i, item.description, item.qty, item.price, item.amount);
-        i++;
-    });
-
-
-    $('#client_name').val(invoiceJson.recipient.name);
-    $('#client_address_1').val(invoiceJson.recipient.address.line1);
-    $('#client_address_2').val(invoiceJson.recipient.address.line2);
-    $('#client_town').val(invoiceJson.recipient.address.town);
-    $('#client_postcode').val(invoiceJson.recipient.address.postcode);
-    $('#client_country').val(invoiceJson.recipient.address.country);
-    $('#invoice_vat_rate').data('value', invoiceJson.vat_rate);
-
-    refreshNumbers(invoiceProperties);
-
-}
 

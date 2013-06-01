@@ -7,17 +7,28 @@
 			<div class="row">
 				<div class="span6">
 					<ul class="nav nav-list">
-						<li><input type="text" id="company_name" class="h1_input" placeholder="Your Company Name" /></li>
-						<li>Registration number: <input class="shorter" id="company_reg" type="text" placeholder="00000000000" /></li>
-						<li class="hasVat">VAT number: <input class="shorter" id="company_vat"  type="text" placeholder="00000000000" /></li>
+						<li><input type="text" class="h1_input" placeholder="Your Company Name"
+								<%- nameIf("company_name") %>
+								<%- valueIf(invoice, ['sender', 'company_name']) %> /></li>
+						<li>Registration number: <input type="text" class="shorter" id="company_reg" placeholder="00000000000" 
+								<%- nameIf("company_registration_number") %>
+								<%- valueIf(invoice, ['sender', 'company_registration_number']) %> /></li>
+						<li class="hasVat">VAT number: <input type="text" class="shorter" id="company_vat" placeholder="00000000000"
+								<%- nameIf("company_vat_registration") %>
+								<%- valueIf(invoice, ['sender', 'company_vat_registration']) %> /></li>
 					</ul>
 				</div>
 				<div class="span3">
 					<div class="date_section">
 						<ul class="nav nav-list">
 							<li class="nav-header nav-header-darker">Invoice Data</li>
-							<li>Invoice number: <input id="invoice_number" class="shorter" type="text" placeholder="000000" /></li>
-							<li>Date: <input class="shorter datepicker" id="invoice_date" type="text" data-date-format="dd/mm/yyyy" placeholder="21/04/2013"/></li>
+							<li>Invoice number: <input id="invoice_number" class="shorter" type="text" placeholder="000000" 
+								<%- nameIf("invoice.number") %>
+								<%- valueIf(invoice, ['number']) %> 
+								/></li>
+							<li>Date: <input class="shorter datepicker" id="invoice_date" type="text" data-date-format="dd/mm/yyyy" placeholder="21/04/2013"
+								<%- nameIf("invoice.date") %>
+								<%- valueIf(invoice, ['date']) %> /></li>
 						</ul>
 					</div>
 				</div>
@@ -28,12 +39,24 @@
 			<div class="row">
 				<ul class="nav nav-list span4">
 					<li class="nav-header nav-header-darker">Invoice For</li>
-					<li><input type="text" id="client_name" placeholder="Client Company Name"  /></li>
-					<li><input type="text" id="client_address_1" placeholder="Address Line 1"  /></li>
-					<li><input type="text" id="client_address_2" placeholder="Address Line 2"  /></li>
-					<li><input type="text" id="client_town" placeholder="Town"  /></li>
-					<li><input type="text" id="client_postcode" placeholder="Postcode"  /></li>
-					<li><input type="text" id="client_country" placeholder="Country" /></li>
+					<li><input type="text" id="client_name" placeholder="Client Company Name" 
+								<%- nameIf("invoice.recipient.name") %>
+								<%- valueIf(invoice, ['recipient', 'name']) %> /></li>
+					<li><input type="text" id="client_address_1" placeholder="Address Line 1"  
+								<%- nameIf("invoice.recipient.address.line1") %>
+								<%- valueIf(invoice, ['recipient', 'address', 'line1']) %> /></li>
+					<li><input type="text" id="client_address_2" placeholder="Address Line 2" 
+								<%- nameIf("invoice.recipient.address.line2") %>
+								<%- valueIf(invoice, ['recipient', 'address', 'line2']) %> /></li>
+					<li><input type="text" id="client_town" placeholder="Town"  
+								<%- nameIf("invoice.recipient.address.town") %>
+								<%- valueIf(invoice, ['recipient', 'address', 'town']) %> /></li>
+					<li><input type="text" id="client_postcode" placeholder="Postcode" 
+								<%- nameIf("invoice.recipient.address.postcode") %>
+								<%- valueIf(invoice, ['recipient', 'address', 'postcode']) %> /></li>
+					<li><input type="text" id="client_country" placeholder="Country" 
+								<%- nameIf("invoice.recipient.address.country") %>
+								<%- valueIf(invoice, ['recipient', 'address', 'country']) %> /></li>
 				</ul>
 			</div>
 
@@ -49,21 +72,55 @@
 						<th class="right">Amount</th>
 						<th width="15%" class="right actions_column">Actions</th>
 					</tr>
-					
+
+				<% 	
+
+					if(typeof invoice !== "undefined") {
+						var items = invoice.invoice_data.items;
+
+						for(var i = 0; i < items.length+1; i++) {
+							var item = undefined;
+							if(i < items.length) {
+								item = items[i];
+							} 
+				%>	
+						<tr class="sheet_row">	
+        				<td><input type="text" id="description" class="description navigable itemField" 
+        						data-field-name="description" <%- valueIf(item , ['description']) %> /></td>
+        				<td><input type="text" id="qty" class="navigable sensitive number qty itemField" 
+        						data-field-name="qty" <%- dataValueIf(item, ['qty']) %> /></td>
+        				<td><input type="text" id="price" class="navigable sensitive number price itemField" 
+        						data-field-name="price" <%- dataValueIf(item, ['price']) %> /></td>
+        				<td><input type="text" id="amount" class="navigable sensitive amount number itemField" 
+        						data-field-name="amount" <%- dataValueIf(item, ['amount']) %> /></td>
+        				<td class="right"><div class="btn-group controls">
+			                <a class="up navigable btn btn-small"><i class="icon-arrow-up"></i></a>
+			                <a class="down navigable btn btn-small"><i class="icon-arrow-down"></i></a>
+			                <a class="del navigable btn btn-small btn-danger" type="button">
+			                	<i class="icon-trash icon-white"></i></a>
+							</div></td>
+        				</tr>
+
+				<% 	
+					} 
+				}
+				%>	
+
 					<tr id="lastRow">
 						<td><a id="addRow" class="navigable btn btn-small"/><i class="icon-plus"></i> Add Item</a></td>
 						<td/><td><span class="hasVat">Subtotal</span></td>
-						<td><input id="invoice_subtotal" type="text" class="navigable number hasVat"/></td>
-					</tr>
-					<tr>
-						<td/><td/>
+						<td><input id="invoice_subtotal" type="text" class="navigable number hasVat"
+								<%- dataValueIf(invoice, ['invoice_data','subtotal']) %>  /></td>
+						</tr>
+					<tr><td/><td/>
 						<td><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /></span></td>
-						<td><input type="text" id="invoice_vat" class="navigable number hasVat" /></td>
+						<td><input type="text" id="invoice_vat" class="navigable number hasVat" 
+							<%- dataValueIf(invoice, ['invoice_data','vat']) %> /></td>
 					</tr>
-					<tr>
-						<td/><td/>
+					<tr><td/><td/>
 						<td>Total</td>
-						<td><input type="text" id="invoice_total" class="navigable number"  /></td>
+						<td><input type="text" id="invoice_total" class="navigable number"  
+							<%- dataValueIf(invoice, ['invoice_data','total']) %> /></td>
 					</tr>
 				</table>
 				
