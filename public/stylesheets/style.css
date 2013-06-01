@@ -115,6 +115,10 @@ div.navbar-fixed-topx.alberto-nav {
 
 }
 
+input#invoice_vat_rate {
+	width: 50px;
+}
+
 #additional_information {
 	height: 100px;
 	width:100%;

@@ -42,7 +42,7 @@ function initializeInvoiceadorForm(invoiceProperties) {
 
  	$('#invoice_date').val(getTodayDate());
     $('.datepicker').datepicker();
-    
+
    /** currency formatting **/
 
    $('.price').each(function() {
@@ -57,32 +57,41 @@ function initializeInvoiceadorForm(invoiceProperties) {
          $(this).val($(this).data('value'))
    });
   
-    /** Button delegates **/
-    
-    $('#fields').delegate('.del:not(.disabled)', 'click', function() {
-        $(this).closest(".sheet_row").remove();
-        refreshButtons();
-    });
-    
-    $('#fields').delegate('.up:not(.disabled)', 'click', function () {
-        moveUp($(this).closest('.sheet_row'))
-        refreshButtons();
-         $(this).focus();
-    });
-    
-    $('#fields').delegate('.down:not(.disabled)', 'click', function () {
-        moveDown($(this).closest('.sheet_row'));
-        refreshButtons();
-         $(this).focus();
-    });
+    /** action Button delegates **/
+
+    $('#fields').showCellContentOnHoverOnly({ buttonsClass: 'controls', selectorAncestor: 'tr'});
+
+    $('#fields').actionButtons(
+        {
+            rowClass: 'sheet_row', 
+            actionCallback: function(elem) {
+                $('#fields').trigger($.Event('buttons'));
+                elem.focus();
+            }
+        }
+    );
     
     /** Number representation delegates **/
+
+    $('#fields').bind('numbers', function() {
+        refreshNumbers(invoiceProperties);
+    });
+    $('#fields').bind('buttons', function() {
+        refreshButtons(invoiceProperties);
+    });
     
     $('#fields').delegate('.sensitive', 'keyup', function() {
         $(this).data('value', $(this).val());
-        refreshNumbers(invoiceProperties);
+        $('#fields').trigger($.Event('numbers'));
     });
 
+    /** new row **/
+    /*$('#fields').registerAddRow({
+        buttonId : "#addRow", 
+        rowClass: ".sheet_row", 
+        itemClass: ".itemField", 
+        dataAttribute: "value"})
+*/
     $('#addRow').click(function () {
         var newRow = $('.sheet_row:last').clone();
         newRow.find('.itemField').each(function() {
@@ -90,46 +99,29 @@ function initializeInvoiceadorForm(invoiceProperties) {
             $(this).data('value', '')
         })
         newRow.insertBefore('#lastRow');
-        refreshButtons(invoiceProperties);
+        $('#fields').trigger($.Event('buttons'));
     });
 
     /** Navigation **/
 
-    $('#fields').delegate('tr', 'mouseover', function() {
-            $(this).find('.controls').show();
-    });
-    $('#fields').delegate('tr', 'mouseout', function() {
-            $(this).find('.controls').hide();
-    });
+
+    $('#fields').navigableTable();
 
     
-    $('#fields').delegate('.navigable', 'keydown', function(e) {
-
-        switch(e.keyCode) {
-            case 37: $(this).closest('td').prev().find('.navigable').focus();  break;
-            case 39: $(this).closest('td').next().find('.navigable').focus();  break;
-            case 38: var index = $(this).closest('td').index();
-                     $($(this).closest('tr').prev().find('td')[index]).find('.navigable').focus(); 
-                     break;
-            case 40: var index = $(this).closest('td').index(); 
-                     $($(this).closest('tr').next().find('td')[index]).find('.navigable').focus();  
-                     break;
-            default:
-        }    
-    });
+  
     
     /** VAT toggling **/
     $('#hasVat').click(function () {
         $(".hasVat").toggle(this.checked);
         invoiceProperties.hasVat = this.checked;
-        refreshNumbers(invoiceProperties);
+        $('#fields').trigger($.Event('numbers'));
     });
     
     /** Currency **/
     $('#currencySelect').change(function() {
         $("#currencySelect option:selected").each(function () {
            invoiceProperties.currency = $(this).val();
-            refreshNumbers(invoiceProperties);
+           $('#fields').trigger($.Event('numbers'));
        }); 
     });
 
@@ -150,7 +142,6 @@ function refreshNumbers(invoiceProperties) {
     $(".amount").each(function () {
         var tr = $(this).closest('tr')
         var index = $(this).closest('tr').data("rownum");
-        //----var rowid = $(this).closest('tr').data("rowid");
         var qty = tr.find('.qty').data('value');
         var price = tr.find('.price').data('value');
 
@@ -205,7 +196,6 @@ function isValid(str, pattern) {
 }
 
 function refreshButtons() {
-    //var class_ = 'noclick';
     var disabledClass = 'disabled';
     if ($(".sheet_row").size() == 1) {
         $(".del").addClass(disabledClass);            
@@ -219,8 +209,7 @@ function refreshButtons() {
 }
 
 
-function moveUp(a) { if (a.prev() != null) a.insertBefore(a.prev()) }
-function moveDown(a) { if (a.next() != null) a.insertAfter(a.next()) }
+
 
 function collectPayload(invoiceProperties) {
     var items = [];
@@ -242,7 +231,7 @@ function collectPayload(invoiceProperties) {
         "company_name": $('#company_name').val(),
         "company_registration_number": $('#company_registration_number').val(),
     }
-    if($('#invoice.sender.company_vat_registration').val()) {
+    if($('#company_vat_registration').val()) {
         sender["company_vat_registration"] = $('#company_vat_registration').val()
     }
 

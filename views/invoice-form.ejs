@@ -12,10 +12,10 @@
 						<li><input type="text" class="h1_input" placeholder="Your Company Name"
 								<%- nameIf("company_name") %> 
 								<%- valueIf(invoice, ['sender', 'company_name']) %> /></li>
-						<li>Registration number: <input type="text" class="shorter" id="company_reg" placeholder="00000000000" 
+						<li>Registration number: <input type="text" class="shorter" placeholder="00000000000" 
 								<%- nameIf("company_registration_number") %>
 								<%- valueIf(invoice, ['sender', 'company_registration_number']) %> /></li>
-						<li class="hasVat">VAT number: <input type="text" class="shorter" id="company_vat" placeholder="00000000000"
+						<li class="hasVat">VAT number: <input type="text" class="shorter"  placeholder="00000000000"
 								<%- nameIf("company_vat_registration") %>
 								<%- valueIf(invoice, ['sender', 'company_vat_registration']) %> /></li>
 					</ul>
@@ -77,14 +77,16 @@
 
 				<% 	
 
+					var items = [];
 					if(typeof invoice !== "undefined" && invoice != null) {
 						var items = invoice.invoice_data.items;
+					}
 
-						for(var i = 0; i < items.length+1; i++) {
-							var item = undefined;
-							if(i < items.length) {
-								item = items[i];
-							} 
+					for(var i = 0; i < items.length+1; i++) {
+						var item = undefined;
+						if(i < items.length) {
+							item = items[i];
+						} 
 				%>	
 						<tr class="sheet_row">	
         				<td><input type="text" id="description" class="description navigable itemField" 
@@ -105,7 +107,6 @@
 
 				<% 	
 					} 
-				}
 				%>	
 
 					<tr id="lastRow">
@@ -115,7 +116,7 @@
 								<%- dataValueIf(invoice, ['invoice_data','subtotal']) %>  /></td>
 						</tr>
 					<tr><td/><td/>
-						<td><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /></span></td>
+						<td><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /> %</span></td>
 						<td><input type="text" id="invoice_vat" class="navigable number hasVat" 
 							<%- dataValueIf(invoice, ['invoice_data','vat']) %> /></td>
 					</tr>

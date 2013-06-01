@@ -22,24 +22,9 @@ $(document).ready(function () {
     });
 
 
-    $('.dropdown-button').click(function() {
-        var clicked = $(this);
-        $(this).closest('li').siblings().each(function(){
-            $(this).removeClass('active'); 
-             var target = $(this).find('a').data('target');
-            $('#'+target).hide();
-           
-        });
-         $(this).siblings().each(function(){
-             var target = $(this).data('target');
-            $('#'+target).hide();
-         });
+    $('.dropdown-button').dropdownButton();
 
-        $(this).closest('li').toggleClass('active');
-        var target = $(this).data('target');
-        $('#'+target).toggle();
-    });
-    
+   
     /** sticky navbar on scroll**/
     $(document).scroll(function(){
         var elem = $('.alberto-nav');
@@ -55,7 +40,11 @@ $(document).ready(function () {
         else {
             elem.removeClass('navbar-fixed-topx');
         }
+
+       
     });
+
+
 
     /** Save invoice **/
     $('.save').click(function() {
