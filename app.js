@@ -11,22 +11,19 @@ var errors = require('./lib/invoiceErrorHandling.js');
 
 
 app.locals.nameIf = function(obj) {
-	try { 
 		if(typeof obj !== "undefined") {
 			return 'id="'+obj+'" name="'+obj+'"';
 		}
 		return "";
-	} catch(e) {
-		 console.log(e.message);  
-	}  
-	
 };
 
 function safeNavigate(obj, list) {
-	console.log('hello')
+	if(typeof obj === 'undefined') {
+		return "";
+	}
 	var ptr = obj;
 	for(var i = 0; i < list.length; i++) {
-		if(typeof(ptr) !== 'undefined') {
+		if(typeof(ptr) !== 'undefined' && ptr != null) {
 			ptr = ptr[list[i]];
 		}
 		else {

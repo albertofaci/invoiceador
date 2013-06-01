@@ -3,12 +3,14 @@
 		<div id="content">
 
 			<br/><br/><br/>
+
+<% var invoice = locals.invoice %>
 			
 			<div class="row">
 				<div class="span6">
 					<ul class="nav nav-list">
 						<li><input type="text" class="h1_input" placeholder="Your Company Name"
-								<%- nameIf("company_name") %>
+								<%- nameIf("company_name") %> 
 								<%- valueIf(invoice, ['sender', 'company_name']) %> /></li>
 						<li>Registration number: <input type="text" class="shorter" id="company_reg" placeholder="00000000000" 
 								<%- nameIf("company_registration_number") %>
@@ -75,7 +77,7 @@
 
 				<% 	
 
-					if(typeof invoice !== "undefined") {
+					if(typeof invoice !== "undefined" && invoice != null) {
 						var items = invoice.invoice_data.items;
 
 						for(var i = 0; i < items.length+1; i++) {
