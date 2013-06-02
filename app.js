@@ -75,7 +75,7 @@ app.param("hash", params.hash);
 //ROUTING - PAGE
 app.get('/', page.index); // EDIT UNSAVED
 app.post('/inv', params.new_hash, params.invoice_payload, dao.save, page.redirect_edit) // SAVE NEW
-app.get('/inv/:hash', dao.findByPrivateHash, page.render_view); //VIEW 
+app.get('/inv/:hash', dao.findByPrivateHash, page.render_view); //VIEW AS HTML
 app.put('/inv/:hash',  params.invoice_payload, dao.findByPrivateHash, dao.update, page.redirect_edit); //UPDATE
 app.get('/inv/:hash/edit', dao.findByPrivateHash, page.render_edit); //EDIT 
 app.get('/:hash', dao.findByPublicHash, page.render_view);  //VIEW PUBLIC
@@ -84,7 +84,7 @@ app.get('/:hash', dao.findByPublicHash, page.render_view);  //VIEW PUBLIC
 //ROUTING - REST
 app.post('/api/v1/invoices', params.new_hash, params.invoice, dao.save, rest.hash);
 app.put('/api/v1/invoices/:hash', params.invoice, dao.findByPrivateHash, dao.update, rest.hash);
-app.get('/api/v1/invoices/:hash', dao.findByPrivateHash, rest.invoice);
+app.get('/api/v1/invoices/:hash.:ext?', dao.findByPublicHash, rest.invoice);
 
 //RUN
 app.listen(3000);	
