@@ -1,5 +1,5 @@
 	<% if(typeof hash !== "undefined") { %>
-		<form method="post" name="myForm" id="myForm" action="/inv/<%= hash %>">
+		<form method="post" name="myForm" class="hide" id="myForm" action="/inv/<%= hash %>">
 			<input type="hidden" name="_method" value="put" />
 	<% } else { %>
 		<form method="post" name="myForm" id="myForm" action="/inv">
@@ -7,53 +7,55 @@
 			<input type="hidden" name="payload" id="payload">
 		</form>
 
-	<div class="row">
-	     <div class="navbar alberto-nav">
-	     	<div class="navbar-inner">
-				<ul class="nav">
-					<li class="title"><a href="#">Invoiceador</a></li>
+		<section class="subhead" id="overview">
+			<div class="subnav">
+				<ul class="nav nav-pills">
+					<li class="strong"><a href="/">Invoiceador!</a></li>
+<% if(display_type === 'EDIT') { %>
 					<li><a href="#" class="save prevent-default"><i class="icon-hdd"></i> Save</a></li>
-	      			<li class="dropdown">
-						  <a id="share-label" class="dropdown-button" data-target="dropdownExport">
-						    <i class="icon-print"></i> Export <b class="caret"></b>
-						  </a>
-	      			</li>
-	      			 <li class="dropdown">
-                      	<a class="dropdown-button" data-target="dropdownShare">
-                      		<i class="icon-share"></i> Share <b class="caret"></b>
-                      	</a>
-                    </li>
-	      			<li class="dropdown">
-	      				<a class=" dropdown-button"  data-target="dropdownOptions">
-	      					<i class="icon-wrench"></i> Options <b class="caret"></b>
-	      				</a>
-	      			</li>
-	      			
-	      		</ul>
+					<li class="dropdown">
+						<a class=" dropdown-button"  data-target="dropdownOptions">
+							<i class="icon-wrench"></i> Options <b class="caret"></b>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-button" data-target="dropdownShare">
+							<i class="icon-share"></i> Share <b class="caret"></b>
+						</a>
+					</li>
+<% } %>
+					<li class="dropdown">
+						<a id="share-label" class="dropdown-button" data-target="dropdownExport">
+							<i class="icon-print"></i> Export <b class="caret"></b>
+						</a>
+					</li>
+				</ul>
 			</div>
 			<div id="menu-content">
+<% if(display_type === 'EDIT') { %>
 				<div id="dropdownShare" class="dropdownCont">
-<% if(typeof invoiceObject != 'undefined') { %>
-					<ul class="">
-					<li>
-						<label><span class="subtitle">Public</span> <small>(editable)</small></label>
-					 	<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
-					</li>
-					<li>
-						<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-					 	<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
-					</li>
+					<% if(typeof invoiceObject != 'undefined') { %>
+					<ul class="basic-list">
+						<li>
+							<label><span class="subtitle">Public</span> <small>(editable)</small></label>
+							<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
+						</li>
+						<li>
+							<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
+							<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+						</li>
 					</ul>
-<% } else { %>
+					<% } else { %>
 					<p>You haven't saved the invoice yet!</p>
-<% } %>
+					<% } %>
 				</div>
 				<div id="dropdownOptions" class="dropdownCont">
-					<ul>
+					<ul class="basic-list">
 						<li><span class="subtitle">Locale:</span> UK (£)</li>
-	          			<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
+						<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
 					</ul>
 				</div>
 			</div>
-	     </div>
-	</div>
+<% } %>
+		</section>
+

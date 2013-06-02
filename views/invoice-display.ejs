@@ -1,21 +1,25 @@
-<div class="row">
-	
-		<div id="content">
+<section class="invoice">
 
 			<br/><br/><br/>
-			
+
 			<div class="row">
+				<div class="span12 right">
+					<h1>Invoice</h1>
+				</div>
+			</div>
+			
+			<div class="row-fluid">
 				<div class="span6">
-					<ul class="nav nav-list">
-						<li><h1><%= invoice.sender.company_name %></h1></li>
+					<ul class="basic-list">
+						<li><h3><%= invoice.sender.company_name %></h3></li>
 						<li>Registration number: <%= invoice.sender.company_registration_number %></li>
 						<li class="hasVat">VAT number: <%= invoice.sender.company_vat_registration %></li>
 					</ul>
 				</div>
-				<div class="span3">
+				<div class="span6 right">
 					<div class="date_section">
-						<ul class="nav nav-list">
-							<li class="nav-header nav-header-darker">Invoice Data</li>
+						<ul class="basic-list">
+							<!-- <li class="nav-header mini-title">Invoice Data</li> -->
 							<li>Invoice number: <%= invoice.number %></li>
 							<li>Date: <%= invoice.date %></li>
 						</ul>
@@ -26,15 +30,17 @@
 			<br/><br/>
 
 			<div class="row">
-				<ul class="nav nav-list span4">
-					<li class="nav-header nav-header-darker">Invoice For</li>
-					<li><%= invoice.recipient.name %></li>
-					<li><%= invoice.recipient.address.line1 %></li>
-					<li><%= invoice.recipient.address.line2 %></li>
-					<li><%= invoice.recipient.address.town %></li>
-					<li><%= invoice.recipient.address.postcode %></li>
-					<li><%= invoice.recipient.address.country %></li>
-				</ul>
+				<div class="span4">
+					<ul class="basic-list">
+						<li class="mini-title">Invoice For</li>
+						<li><%= invoice.recipient.name %></li>
+						<li><%= invoice.recipient.address.line1 %></li>
+						<li><%= invoice.recipient.address.line2 %></li>
+						<li><%= invoice.recipient.address.town %></li>
+						<li><%= invoice.recipient.address.postcode %></li>
+						<li><%= invoice.recipient.address.country %></li>
+					</ul>
+				</div>
 			</div>
 
 			<br/><br/>
@@ -43,27 +49,48 @@
 	
 				<table id="fields" class="table table-condensed table-borderless" width="100%">
 					<tr>
-						<th width="40%">Description</th>
-						<th class="right">Qty</th>
-						<th class="right">Price</th>
-						<th class="right">Amount</th>
-						<th width="15%" class="right actions_column">Actions</th>
+						<th class="mini-title" width="40%">Description</th>
+						<th class="mini-title right">Qty</th>
+						<th class="mini-title right">Price</th>
+						<th class="mini-title right">Amount</th>
 					</tr>
 					
-					<tr id="lastRow">
-						<td><a id="addRow" class="navigable btn btn-small"/><i class="icon-plus"></i> Add Item</a></td>
-						<td/><td><span class="hasVat">Subtotal</span></td>
-						<td><input id="invoice_subtotal" type="text" class="navigable number hasVat"/></td>
-					</tr>
+				<% 	
+
+					var items = invoice.invoice_data.items;
+
+					for(var i = 0; i < items.length; i++) {
+						item = items[i];
+				%>	
+						<tr class="sheet_row">	
+        				<td><span><%= item.description %></span></td>
+        				<td class="number"><span ><%= item.qty %></span></td>
+						<td class="number"><span class="currency"><%= item.price %></span></td>
+						<td class="number"><span class="currency"><%= item.amount %></span></td>
+        				</tr>
+
+				<% 	
+					} 
+				%>	
+				<tr><td>&nbsp;</td></tr>
+
+				<% if(invoice.is_vat) {  %>
 					<tr>
 						<td/><td/>
-						<td><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /></span></td>
-						<td><input type="text" id="invoice_vat" class="navigable number hasVat" /></td>
+						<td class="mini-title right">Subtotal</td>
+						<td class="number"><span class="currency"><%= invoice.invoice_data.subtotal %></span></td>
 					</tr>
+				
 					<tr>
 						<td/><td/>
-						<td>Total</td>
-						<td><input type="text" id="invoice_total" class="navigable number"  /></td>
+						<td class="mini-title right">VAT <span><%= invoice.vat_rate %></span> %</td>
+						<td class="number"><span class="currency"><%= invoice.invoice_data.vat %></span> </td>
+					</tr>
+				<% } %>
+					<tr>
+						<td/><td/>
+						<td class="mini-title right">Total</td>
+						<td class="number"><span class="strong currency"><%= invoice.invoice_data.total %></span></td>
 					</tr>
 				</table>
 				
@@ -71,9 +98,8 @@
 
 			<div class="row">
 				<p class="nav-header nav-header-darker ">Additional Information</p>
-				<textarea id="additional_information" height="50" class="textarea"></textarea>	
+				<p id="additional_information" height="50" class="textarea"></p>	
 			</div>
 
-			
-		</div>
-</div>
+
+</section>

@@ -40,11 +40,15 @@ var numberPattern = /^\d+$/;
 
 function initializeInvoiceadorForm(invoiceProperties) {
 
+
+
  	$('#invoice_date').val(getTodayDate());
     $('.datepicker').datepicker();
 
    /** currency formatting **/
-
+   $('.currency').each(function() {
+        $(this).formatCurrency({region: invoiceProperties.currency});
+   });
    $('.price').each(function() {
         $(this).formatCurrency({region: invoiceProperties.currency});
    });

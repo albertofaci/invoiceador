@@ -1,14 +1,26 @@
-#content a.noclick {
-	border: 1px solid #999;
-	background-color: #aaa;
-}
-#content  input.number {
-	text-align: right;
-}
-#vat_rate {
+
+.invoice #vat_rate {
 	width: 40px;
 }
-#content input[type=text] {
+
+textarea {
+	background-color: #fbfbfb;
+}
+td.number, input.number {
+	text-align: right;
+}
+
+input.large-input {
+	height: 30px;
+}
+.invoice input {
+	width: 100%;
+}
+.invoice  input.shorter {
+	max-width: 150px;
+}
+
+.invoice input[type=text] {
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
@@ -17,103 +29,45 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
+	background-color: #f6f6f6;
+	
 }
-#content input[type=text]:focus {
-	background-color: #ffffaa;
+.invoice input[type=text]:focus {
+	background-color: #ffffcc;
 }
-
-
-#header {
-	height: 44px;
-	background: #3D6AA2;
+.invoice input.h1_input {
+	font-size: 1.8em;
+	height: 2em;
+	font-weight: bold;
+	vertical-align: middle;
 }
-
-
 
 .table-borderless, .table-borderless td,
 .table-borderless th {
 	border: 0;
 }
 
-#content input.h1_input {
-	font-size: 1.8em;
-	height: 2em;
+.strong { 
 	font-weight: bold;
-	width: 450px;
-	vertical-align: middle;
 }
 
-body {
-	padding-bottom: 40px;
-}
-
-th{
-	font-size: 11px;
-	font-weight: bold;
-	line-height: 20px;
-	color: #666;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	text-transform: uppercase;
-}
-
-.subtitle {
-	font-size: 11px;
-	font-weight: bold;
-	line-height: 20px;
-	color: #666;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	text-transform: uppercase;
-}
-
-.nav-header-darker {
-	color: #666;
-}
-
-input.large-input {
-	height: 30px;
-}
-
-#content input {
-	width: 100%;
-}
-
-#content input.shorter {
-	width: 100px;
-}
-
-.recipient, .date_section {
-	width: 300px;
+.date_section {
+	padding-left: 20px;
+	padding-top: 20px;
 }
 
 .controls {
 	display: none;
 }
-#content {
-	margin-left: 30px;
-}
 .actions_column {
 	min-width: 120px;
 }
-td.right, th.right, p.right {
+
+td.right, th.right, p.right, div.right, input.right {
 	text-align: right;
 }
-#main-container {
-	padding-top: 20px;
-	max-width: 900px;
-}
 
-div.alberto-nav {
-	float: left;
-	width:100%;
-}
 
-div.navbar-fixed-topx.alberto-nav {
-	top: 0;
-	left:0;
-	position: fixed;
-	width: 100%;
-
-}
 
 input#invoice_vat_rate {
 	width: 50px;
@@ -122,22 +76,6 @@ input#invoice_vat_rate {
 #additional_information {
 	height: 100px;
 	width:100%;
-}
-li.title {
-	font-weight: bold;
-	color: #333;
-}
-.container {
-	margin: 0 auto;
-	max-width: 1000px;
-}
-.navbar .nav>li>p {
-	float: none;
-	padding: 10px 15px 10px;
-	color: #777777;
-	text-decoration: none;
-	text-shadow: 0 1px 0 #ffffff;
-	margin-bottom: 0;
 }
 
 .hero-unit legend {
@@ -155,11 +93,6 @@ div.dropdownCont {
 	border: 0px solid #eee;
 }
 
-.full-width {
-	min-width: 300px;
-}
-
-
 @font-face {
 	font-family: 'KaushanScriptRegular';
 	src: url('/external/kaushan-script-fontfacekit/KaushanScript-Regular-webfont.eot');
@@ -172,7 +105,18 @@ div.dropdownCont {
 
 }
 
-.actions {
-	text-align: center;
+.mini-title {
+	font-weight: bold;
+	font-size: 13px;
+	color: #666;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
 }
+
+ul.basic-list {
+	list-style: none;
+	margin-left: 0;
+}
+
+
 

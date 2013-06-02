@@ -1,9 +1,13 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0.js'></script>
 <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-<link href="/external/bootstrap-readable.min.css" rel="stylesheet">
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<!-- <link href="/external/bootstrap-readable.min.css" rel="stylesheet"> -->
+<!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script> -->
 
+ <link href="http://bootswatch.com/readable/bootstrap.min.css" rel="stylesheet">
+ <link href="http://bootswatch.com/default/bootstrap-responsive.min.css" rel="stylesheet">
+ <link href="http://bootswatch.com/css/font-awesome.min.css" rel="stylesheet">
+ <link href="/external/Readable_files/bootswatch.css" rel="stylesheet">
 
 <script type='text/javascript' src="https://jquery-formatcurrency.googlecode.com/svn/trunk/jquery.formatCurrency.js"></script>
 
@@ -13,8 +17,19 @@
 <link href="/external/datepicker/css/datepicker.css" rel="stylesheet" type="text/css">
 
 
-<link href="/assets/stylesheets/style.css" rel="stylesheet" type="text/css">
+<script src="/external/Readable_files/jquery.smooth-scroll.min.js"></script>
+<script src="/external/Readable_files/bootstrap.min.js"></script>
+<script src="/external/Readable_files/bootswatch.js"></script>
+
+
+<link href="/assets/stylesheets/style.css?A=<%= new Date().getMilliseconds() %>" rel="stylesheet" type="text/css"> 
 <script src="/assets/javascripts/invoiceador.dropdownButton.js?a=<%= new Date().getMilliseconds() %>"></script>
 <script src="/assets/javascripts/invoiceador.grid.js?a=<%= new Date().getMilliseconds() %>"></script>
 <script src="/assets/javascripts/invoiceador.form.js?a=<%= new Date().getMilliseconds() %>"></script>
 <script src="/assets/javascripts/invoiceador.js?a=<%= new Date().getMilliseconds() %>"></script>
+
+<style>
+    div.subnav-fixed {
+        top: 0;
+    }
+</style>

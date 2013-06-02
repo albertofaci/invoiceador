@@ -5,7 +5,8 @@
 	<%- include header %>
 
 </head>
-<body>
+<body id="top" data-spy="scroll" data-target=".subnav" data-offset="80" style="margin-top: 0px;">
+
 
 	<% if(typeof invoice !== 'undefined') { %>
 	<input type="hidden" name="shortid" id="shortid" value="<%= hash %>" />
