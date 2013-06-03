@@ -53,24 +53,23 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
     app.use(app.router);
-    
-  //  app.use(express.logger());
+    //app.use(express.favicon(__dirname + '/public/images/favicon.ico')); 
+    //app.use(express.logger());
     app.set('view engine', 'ejs');
     app.set('view options', { layout: false });
    	app.use(function(err, req, res, next) {
 	  console.log(err);
-	  //next(err);
+	  next();
 	});
-	//app.use(errors);
+	app.use(errors);
 });
 
 app.use("/assets", express.static(__dirname + '/public'));
 app.use("/external", express.static(__dirname + '/external'));
-
+app.get('/favicon.ico', function(req, res) { res.status(499); });  //FAVICON
 
 //PARAMS
 app.param("hash", params.hash);
-
 
 //ROUTING - PAGE
 app.get('/', page.index); // EDIT UNSAVED
