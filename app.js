@@ -86,8 +86,8 @@ app.get('/inv/:hash/edit', dao.findByPrivateHash, page.render_edit); //EDIT
 app.get('/:hash', dao.findByPublicHash, page.render_view);  //VIEW PUBLIC
 
 //ROUTING - COOKIE-SAVED VALUES
-app.get('/saved-details/:cookieName', cookies.get);
-app.post('/saved-details/:cookieName', cookies.post)
+app.get('/saved-details/:cookieName', cookies.authorised_cookies, cookies.get);
+app.post('/saved-details/:cookieName', cookies.authorised_cookies, cookies.post);
 
 
 //ROUTING - REST
