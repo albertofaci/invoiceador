@@ -42,8 +42,11 @@ app.locals.valueIf = function(obj, list) {
 	return "";
 };
 
-app.locals.dataValueIf = function(obj, list) {
+app.locals.dataValueIf = function(obj, list, defaultValue) {
 	var value = safeNavigate(obj, list);
+	if(!value && defaultValue) {
+		value = defaultValue;
+	}
 	if(value) {
 		return 'data-value="'+value+'" value="'+value+'"';
 	}
@@ -56,7 +59,7 @@ app.configure(function() {
 	app.use(express.cookieParser());
     app.use(app.router);
     //app.use(express.favicon(__dirname + '/public/images/favicon.ico')); 
-    app.use(express.logger());
+   // app.use(express.logger());
     app.set('view engine', 'ejs');
     app.set('view options', { layout: false });
    	app.use(function(err, req, res, next) {

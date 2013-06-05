@@ -119,7 +119,7 @@
 								<%- dataValueIf(invoice, ['invoice_data','subtotal']) %>  /></td>
 						</tr>
 					<tr><td/><td/>
-						<td class="mini-title"><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" /> %</span></td>
+						<td class="mini-title"><span class="hasVat">VAT <input id="invoice_vat_rate" class="navigable sensitive number" type="text" <%- dataValueIf(invoice, ['vat_rate'], '0')  %> /> %</span></td>
 						<td><input type="text" id="invoice_vat" class="navigable number hasVat" 
 							<%- dataValueIf(invoice, ['invoice_data','vat']) %> /></td>
 					</tr>
