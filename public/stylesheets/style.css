@@ -63,7 +63,7 @@ input.large-input {
 	min-width: 120px;
 }
 
-td.right, th.right, p.right, div.right, input.right {
+td.right, th.right, p.right, div.right, input.right, .right {
 	text-align: right;
 }
 
@@ -91,6 +91,11 @@ div.dropdownCont {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	border: 0px solid #eee;
+}
+
+div.dropdownCont input[type=text] {
+	width: 100%; 
+	max-width: 400px;
 }
 
 @font-face {
