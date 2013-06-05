@@ -59,7 +59,7 @@ app.configure(function() {
 	app.use(express.cookieParser());
     app.use(app.router);
     //app.use(express.favicon(__dirname + '/public/images/favicon.ico')); 
-   // app.use(express.logger());
+    app.use(express.logger());
     app.set('view engine', 'ejs');
     app.set('view options', { layout: false });
    	app.use(function(err, req, res, next) {
@@ -86,7 +86,7 @@ app.post('/inv', params.new_hash, params.invoice_payload, dao.save, page.redirec
 app.get('/inv/:hash', dao.findByPrivateHash, page.render_view); //VIEW AS HTML
 app.put('/inv/:hash',  params.invoice_payload, dao.findByPrivateHash, dao.update, page.redirect_edit); //UPDATE
 app.get('/inv/:hash/edit', dao.findByPrivateHash, page.render_edit); //EDIT 
-app.get('/:hash', dao.findByPublicHash, page.render_view);  //VIEW PUBLIC
+app.get('/:hash.:ext?', dao.findByPublicHash, page.render_view);  //VIEW PUBLIC
 
 //ROUTING - COOKIE-SAVED VALUES
 app.get('/saved-details/:cookieName', cookies.authorised_cookies, cookies.get);

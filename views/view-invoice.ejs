@@ -15,7 +15,9 @@
 	<input type="hidden" name="hash" id="hash" value="<%= hash %>" />
 
 	<div id="main-container" class="container">
-		<%- include menu %>
+		<% if(!plain) {  %>
+			<%- include menu %>
+		<% } %>
 		<%- include invoice-display %>
 	</div>
 
