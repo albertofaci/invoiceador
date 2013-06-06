@@ -49,11 +49,11 @@
 						<ul class="basic-list">
 							<li>
 								<label><span class="subtitle">Public</span> <small>(editable)</small></label>
-								<input type="text" class="full-width select-auto" value="/<%=invoiceObject.public_hash %>"/>
+								<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
 							</li>
 							<li>
 								<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-								<input type="text" class="full-width select-auto" value="/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+								<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
 							</li>
 
 						</ul>
