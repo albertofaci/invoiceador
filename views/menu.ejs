@@ -14,7 +14,7 @@
 <% if(display_type === 'EDIT') { %>
 					<li><a href="#" class="save prevent-default"><i class="icon-hdd"></i> Save</a></li>
 					<li class="dropdown">
-						<a class=" dropdown-button"  data-target="dropdownOptions">
+						<a class=" dropdown-button large-dropdown-button"  data-target="dropdownOptions">
 							<i class="icon-wrench"></i> Options <b class="caret"></b>
 						</a>
 					</li>
@@ -24,31 +24,40 @@
 						</a>
 					</li>
 <% } %>
-					<li class="dropdown">
-						<a id="share-label" class="dropdown-button" data-target="dropdownExport">
-							<i class="icon-print"></i> Export <b class="caret"></b>
-						</a>
-					</li>
+				 	<li class="dropdown">
+					  <a class="dropdown-togglex" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
+					    <i class="icon-print"></i> Export
+					    <b class="caret"></b>
+					  </a>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					    <li><a href="/<%=invoiceObject.public_hash %>.html">HTML</a></li>
+					    <li><a href="/<%=invoiceObject.public_hash %>.json">JSON</a></li>
+					    <li><a href="/<%=invoiceObject.public_hash %>.pdf">PDF</a></li>
+					  </ul>
+					</li> 
 				</ul>
 				<div id="menu-content" class="menu-content">
 <% if(display_type === 'EDIT') { %>
 					<div id="dropdownShare" class="dropdownCont">
+						<a class="dropdown-button remove-button" data-target="dropdownShare"><i class="icon-remove"></i></a>
 						<% if(typeof invoiceObject != 'undefined') { %>
 						<ul class="basic-list">
 							<li>
 								<label><span class="subtitle">Public</span> <small>(editable)</small></label>
-								<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
+								<input type="text" class="full-width select-auto" value="/<%=invoiceObject.public_hash %>"/>
 							</li>
 							<li>
 								<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-								<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+								<input type="text" class="full-width select-auto" value="/inv/<%=invoiceObject.private_data.hash %>/edit"/>
 							</li>
+
 						</ul>
 						<% } else { %>
 						<p>You haven't saved the invoice yet!</p>
 						<% } %>
 					</div>
 					<div id="dropdownOptions" class="dropdownCont">
+						<a class="dropdown-button remove-button" data-target="dropdownOptions"><i class="icon-remove"></i></a>
 						<ul class="basic-list">
 							<li><span class="subtitle">Locale:</span> UK (£)</li>
 							<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>

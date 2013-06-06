@@ -1,4 +1,7 @@
-
+a.remove-button {
+	float: right;
+	color: #666;
+}
 .invoice #vat_rate {
 	width: 40px;
 }
@@ -96,11 +99,6 @@ div.dropdownCont {
 div.dropdownCont input[type=text] {
 	width: 100%; 
 	max-width: 400px;
-}
-
-div.menu-content-fixed {
-	top: 40;
-	position: fixed;
 }
 
 @font-face {

@@ -6,7 +6,7 @@
 		this.click(function() {
 	        var clicked = $(this);
 	        $(this).closest('li').siblings().each(function(){
-	            $(this).removeClass('active'); 
+	            $(this).removeClass('open'); 
 	             var target = $(this).find('a').data('target');
 	            $('#'+target).hide();
 	        });
@@ -16,7 +16,7 @@
 	            $('#'+target).hide();
 	        });
 
-	        $(this).closest('li').toggleClass('active');
+	        $(this).closest('li').toggleClass('open');
 	        var target = $(this).data('target');
 	        $('#'+target).toggle();
 	    });
