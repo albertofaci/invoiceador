@@ -24,17 +24,22 @@
 						</a>
 					</li>
 <% } %>
-				 	<li class="dropdown">
+			 	 	<li class="dropdown">
 					  <a class="dropdown-togglex" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
 					    <i class="icon-print"></i> Export
 					    <b class="caret"></b>
 					  </a>
+
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-					    <li><a href="/<%=invoiceObject.public_hash %>.html">HTML</a></li>
-					    <li><a href="/<%=invoiceObject.public_hash %>.json">JSON</a></li>
-					    <li><a href="/<%=invoiceObject.public_hash %>.pdf">PDF</a></li>
+					  	<% if(typeof invoiceObject !== 'undefined') { %>
+						    <li><a href="/<%=invoiceObject.public_hash %>.html">HTML</a></li>
+						    <li><a href="/<%=invoiceObject.public_hash %>.json">JSON</a></li>
+						    <li><a href="/<%=invoiceObject.public_hash %>.pdf">PDF</a></li>
+						<% } else { %>
+							<li><a>You haven't saved the invoice yet!</a></li>
+						<% } %>
 					  </ul>
-					</li> 
+					</li>  
 				</ul>
 				<div id="menu-content" class="menu-content">
 <% if(display_type === 'EDIT') { %>
