@@ -30,34 +30,36 @@
 						</a>
 					</li>
 				</ul>
-			</div>
-			<div id="menu-content">
+				<div id="menu-content" class="menu-content">
 <% if(display_type === 'EDIT') { %>
-				<div id="dropdownShare" class="dropdownCont">
-					<% if(typeof invoiceObject != 'undefined') { %>
-					<ul class="basic-list">
-						<li>
-							<label><span class="subtitle">Public</span> <small>(editable)</small></label>
-							<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
-						</li>
-						<li>
-							<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-							<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
-						</li>
-					</ul>
-					<% } else { %>
-					<p>You haven't saved the invoice yet!</p>
-					<% } %>
+					<div id="dropdownShare" class="dropdownCont">
+						<% if(typeof invoiceObject != 'undefined') { %>
+						<ul class="basic-list">
+							<li>
+								<label><span class="subtitle">Public</span> <small>(editable)</small></label>
+								<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
+							</li>
+							<li>
+								<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
+								<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+							</li>
+						</ul>
+						<% } else { %>
+						<p>You haven't saved the invoice yet!</p>
+						<% } %>
+					</div>
+					<div id="dropdownOptions" class="dropdownCont">
+						<ul class="basic-list">
+							<li><span class="subtitle">Locale:</span> UK (£)</li>
+							<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
+		<!-- 					<li><input type="button" id="saveCompany" class="btn" value="Save Company"/></li>
+							<li><input type="button" id="loadCompany" class="btn" value="Load Company"/></li> -->
+						</ul>
+					</div>
+		<% } %>
 				</div>
-				<div id="dropdownOptions" class="dropdownCont">
-					<ul class="basic-list">
-						<li><span class="subtitle">Locale:</span> UK (£)</li>
-						<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
-	<!-- 					<li><input type="button" id="saveCompany" class="btn" value="Save Company"/></li>
-						<li><input type="button" id="loadCompany" class="btn" value="Load Company"/></li> -->
-					</ul>
-				</div>
+
 			</div>
-<% } %>
+
 		</section>
 

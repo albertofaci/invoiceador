@@ -98,6 +98,11 @@ div.dropdownCont input[type=text] {
 	max-width: 400px;
 }
 
+div.menu-content-fixed {
+	top: 40;
+	position: fixed;
+}
+
 @font-face {
 	font-family: 'KaushanScriptRegular';
 	src: url('/external/kaushan-script-fontfacekit/KaushanScript-Regular-webfont.eot');
