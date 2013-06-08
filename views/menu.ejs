@@ -1,52 +1,38 @@
-	<% if(typeof hash !== "undefined") { %>
-		<form method="post" name="myForm" class="hide" id="myForm" action="/inv/<%= hash %>">
-			<input type="hidden" name="_method" value="put" />
-	<% } else { %>
-		<form method="post" name="myForm" id="myForm" action="/inv">
-	<% } %>
-			<input type="hidden" name="payload" id="payload">
-		</form>
-
-		<section class="subhead" id="overview">
-			<div class="subnav">
-				<ul class="nav nav-pills">
-					<li class="strong"><a href="/">Invoiceador!</a></li>
-<% if(display_type === 'EDIT') { %>
-					<li><a href="#" class="save prevent-default"><i class="icon-hdd"></i> Save</a></li>
-					<li class="dropdown">
-						<a class=" dropdown-button large-dropdown-button"  data-target="dropdownOptions">
-							<i class="icon-wrench"></i> Options <b class="caret"></b>
-						</a>
-					</li>
-					<li class="dropdown">
-						<a class="dropdown-button" data-target="dropdownShare">
-							<i class="icon-share"></i> Share <b class="caret"></b>
-						</a>
-					</li>
+<% if(typeof hash !== "undefined") { %>
+	<form method="post" name="myForm" class="hide" id="myForm" action="/inv/<%= hash %>">
+		<input type="hidden" name="_method" value="put" />
+<% } else { %>
+	<form method="post" name="myForm" id="myForm" action="/inv">
 <% } %>
-			 	 	<li class="dropdown">
-					  <a class="dropdown-togglex" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
-					    <i class="icon-print"></i> Export
-					    <b class="caret"></b>
-					  </a>
+		<input type="hidden" name="payload" id="payload">
+	</form>
 
-					  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-					  	<% if(typeof invoiceObject !== 'undefined') { %>
-						    <li><a href="/<%=invoiceObject.public_hash %>.html">HTML</a></li>
-						    <li><a href="/<%=invoiceObject.public_hash %>.json">JSON</a></li>
-						    <li><a href="/<%=invoiceObject.public_hash %>.pdf">PDF</a></li>
-						<% } else { %>
-							<li><a>You haven't saved the invoice yet!</a></li>
-						<% } %>
-					  </ul>
-					</li>  
-				</ul>
-				<div id="menu-content" class="menu-content">
+	<section class="subhead" id="overview">
+		<div class="subnav">
+			<ul class="nav nav-pills">
+				<li class="strong"><a href="/">Invoiceador!</a></li>
 <% if(display_type === 'EDIT') { %>
-					<div id="dropdownShare" class="dropdownCont">
-						<a class="dropdown-button remove-button" data-target="dropdownShare"><i class="icon-remove"></i></a>
-						<% if(typeof invoiceObject != 'undefined') { %>
+				<li><a href="#" class="save prevent-default"><i class="icon-hdd"></i> Save</a></li>
+				<li class="popover-markup">
+					<a id="popover-options" class="trigger" data-placement="bottom"><i class="icon-wrench"></i> Options <b class="caret"></b></a>
+					<div class="head hide">Options</div>
+					<div class="content hide">
+						<a id="close" data-target="popover-options" class="close popoverclose">&times;</a>	     
 						<ul class="basic-list">
+							<li><span class="subtitle">Locale:</span> UK (£)</li>
+							<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
+		<!-- 					<li><input type="button" id="saveCompany" class="btn" value="Save Company"/></li>
+							<li><input type="button" id="loadCompany" class="btn" value="Load Company"/></li> -->
+						</ul>
+					<div>
+				</li>
+				<li class="popover-markup">
+					<% if(typeof invoiceObject !== 'undefined') { %>	
+   					<a id="popover-share" class="trigger" data-placement="bottom"><i class="icon-share"></i> Share <b class="caret"></b></a> 
+   					<div class="head hide">Share</div>
+				    <div class="content hide">
+				       <a id="close" data-target="popover-share" class="close popoverclose">&times;</a>	       
+				       <ul class="basic-list">
 							<li>
 								<label><span class="subtitle">Public</span> <small>(editable)</small></label>
 								<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
@@ -55,25 +41,32 @@
 								<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
 								<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
 							</li>
-
 						</ul>
-						<% } else { %>
-						<p>You haven't saved the invoice yet!</p>
-						<% } %>
-					</div>
-					<div id="dropdownOptions" class="dropdownCont">
-						<a class="dropdown-button remove-button" data-target="dropdownOptions"><i class="icon-remove"></i></a>
-						<ul class="basic-list">
-							<li><span class="subtitle">Locale:</span> UK (£)</li>
-							<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
-		<!-- 					<li><input type="button" id="saveCompany" class="btn" value="Save Company"/></li>
-							<li><input type="button" id="loadCompany" class="btn" value="Load Company"/></li> -->
-						</ul>
-					</div>
-		<% } %>
-				</div>
+				    </div>
+			    	<% } else { %>
+						<a id="popover-share" class="disabled" ><i class="icon-share"></i> Share <b class="caret"></b></a> 
+					<% } %>
+				</li>
+<% } %>
+				<li class="dropdown">
+					<% if(typeof invoiceObject !== 'undefined') { %>
+					<a class="trigger" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
+						<i class="icon-print"></i> Export <b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
-			</div>
+						<li><a href="/<%=invoiceObject.public_hash %>.html">HTML</a></li>
+						<li><a href="/<%=invoiceObject.public_hash %>.json">JSON</a></li>
+						<li><a href="/<%=invoiceObject.public_hash %>.pdf">PDF</a></li>
+					</ul>
+					<% } else { %>
+					<a class="disabled"><i class="icon-print"></i> Export <b class="caret"></b></a>
+					<% } %>
+				</li>  
+			</ul>
 
-		</section>
+
+		</div>
+
+	</section>
 

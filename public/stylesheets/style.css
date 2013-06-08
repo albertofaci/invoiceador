@@ -1,3 +1,20 @@
+.subnav .disabled {
+	opacity: 0.4;
+}
+
+.popover {
+	width: 400px;
+	max-width: 400;
+}
+.popover-markup input[type=text] {
+	width: 100%;
+}
+
+.popover-markup .caret {
+margin-top: 8px;
+margin-left: 2px;
+}
+
 a.remove-button {
 	float: right;
 	color: #666;
