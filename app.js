@@ -1,17 +1,18 @@
 
 //SETUP
+var port = process.env.PORT || 3000;
+var mongoUrl = process.env.MONGOLAB_URI ||  process.env.MONGOHQ_URL || 'mongodb://localhost/test'; 
+
 var express = require("express");
 var ejs = require('ejs');
 var app = express();
-var dao  = (require('./lib/invoiceDao.js'))('mongodb://localhost/test');
+var dao  = (require('./lib/invoiceDao.js'))(mongoUrl);
 var rest = require('./lib/invoiceRest.js');
 var params =  require('./lib/invoiceParams.js');
 var page = require('./lib/invoicePage.js');
 var cookies = require('./lib/invoiceCookie.js');
 var errors = require('./lib/invoiceErrorHandling.js');
 var config = require('./lib/invoiceConfig.js');
-
-var port = process.env.PORT || 3000;
 
 config(app);
 
