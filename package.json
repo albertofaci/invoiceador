@@ -1,17 +1,12 @@
 {
 	"name": "node-invoicer",
 	"version": "0.0.1",
-	"private": true,
+	"private": "true",
 	"engines" : {
 		"node" :  "~0.10.15",
 		"npm" : "~1.2.18"
 	},	
 	"dependencies": {
-		"express": "3.x",
-		"ejs": "~0.8.4",
-		"ejs-locals": "~1.0.2",
-		"phantom" : "~0.5.1",
-		"mongoose": "3.6.11",
-		"shortid": "1.0.9",
+		
 	}
 }
