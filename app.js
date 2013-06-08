@@ -9,51 +9,14 @@ var params =  require('./lib/invoiceParams.js');
 var page = require('./lib/invoicePage.js');
 var cookies = require('./lib/invoiceCookie.js');
 var errors = require('./lib/invoiceErrorHandling.js');
+var config = require('./lib/invoiceConfig.js');
 
+var port = process.env.PORT || 3000;
 
-app.locals.nameIf = function(obj) {
-		if(typeof obj !== "undefined") {
-			return 'id="'+obj+'" name="'+obj+'"';
-		}
-		return "";
-};
-
-function safeNavigate(obj, list) {
-	if(typeof obj === 'undefined') {
-		return "";
-	}
-	var ptr = obj;
-	for(var i = 0; i < list.length; i++) {
-		if(typeof(ptr) !== 'undefined' && ptr != null) {
-			ptr = ptr[list[i]];
-		}
-		else {
-			return null;
-		}
-	}
-	return ptr;
-}
-
-app.locals.valueIf = function(obj, list) {
-	var value = safeNavigate(obj, list);
-	if(value) {
-		return 'value="'+value+'"';
-	}
-	return "";
-};
-
-app.locals.dataValueIf = function(obj, list, defaultValue) {
-	var value = safeNavigate(obj, list);
-	if(!value && defaultValue) {
-		value = defaultValue;
-	}
-	if(value) {
-		return 'data-value="'+value+'" value="'+value+'"';
-	}
-	return ""
-};
+config(app);
 
 app.configure(function() {
+
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.cookieParser());
@@ -99,5 +62,7 @@ app.put('/api/v1/invoices/:hash', params.invoice, dao.findByPrivateHash, dao.upd
 app.get('/api/v1/invoices/:hash.:ext?', dao.findByPublicHash, rest.invoice);
 
 //RUN
-app.listen(3000);	
+console.log("Application listening on port "+port);
+app.listen(port);	
+
 
