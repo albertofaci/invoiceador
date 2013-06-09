@@ -27,7 +27,7 @@
 					<div>
 				</li>
 				<li class="popover-markup">
-					<% if(invoice.public_hash) { %>
+					<% if(invoiceObject.public_hash) { %>
    					<a id="popover-share" class="trigger" data-placement="bottom"><i class="icon-share"></i> Share <b class="caret"></b></a> 
    					<div class="head hide">Share</div>
 				    <div class="content hide">
@@ -35,11 +35,11 @@
 				       <ul class="basic-list">
 							<li>
 								<label><span class="subtitle">Public</span> <small>(editable)</small></label>
-								<input type="text" class="full-width select-auto" value="http://localhost:3000/<%=invoiceObject.public_hash %>"/>
+								<input type="text" class="full-width select-auto" value="<%=baseUrl %>/<%=invoiceObject.public_hash %>"/>
 							</li>
 							<li>
 								<label><span class="subtitle">Private</span>  <small>(read-only)</small></label>
-								<input type="text" class="full-width select-auto" value="http://localhost:3000/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+								<input type="text" class="full-width select-auto" value="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/edit"/>
 							</li>
 						</ul>
 				    </div>
@@ -49,7 +49,7 @@
 				</li>
 <% } %>
 				<li class="dropdown">
-					<% if(invoice.public_hash) { %>
+					<% if(invoiceObject.public_hash) { %>
 					<a class="trigger" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
 						<i class="icon-print"></i> Export <b class="caret"></b>
 					</a>
