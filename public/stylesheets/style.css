@@ -2,11 +2,11 @@
 	opacity: 0.4;
 }
 
-.popover {
+.subnav .popover {
 	width: 400px;
 	max-width: 400;
 }
-.popover-markup input[type=text] {
+.popover-markup input.full-width[type=text] {
 	width: 100%;
 }
 
@@ -93,7 +93,7 @@ input#invoice_vat_rate {
 	width: 50px;
 }
 
-#additional_information {
+#additional_info {
 	height: 100px;
 	width:100%;
 }

@@ -260,7 +260,8 @@ function collectPayload(invoiceProperties) {
                "subtotal": $('#invoice_subtotal').data('value'),
                "vat": $('#invoice_vat').data('value'),
                "total": $('#invoice_total').data('value'), 
-            }
+            },
+            "additional_info": $("#additional_info").val()
 
     });
     return payload;

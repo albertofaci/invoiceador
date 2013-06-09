@@ -93,10 +93,12 @@
 				
 			</div>
 
-			<div class="row">
-				<p class="nav-header nav-header-darker ">Additional Information</p>
-				<p id="additional_information" height="50" class="textarea"></p>	
+			<% if (invoice.additional_info) { %>
+			<div class="row-fluid">
+				<p class="mini-title">Additional Information</p>
+				<p id="additional_info" height="50" class="textarea"><%= invoice.additional_info %></p>	
 			</div>
+			<% } %>
 
 
 </section>

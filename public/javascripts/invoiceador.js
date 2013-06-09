@@ -21,19 +21,17 @@ $(document).ready(function () {
         $(this).select();
     });
 
-   // $('.dropdown-button').dropdownButton();
-
     $('.trigger').click(function () {
         $('.popover-markup > .trigger').not(this).popover('hide');
     });
  
     $('.popover-markup > .trigger').popover({ 
         html : true,
-        title: function() {
-          return $(this).parent().find('.head').html();
+        title: function() { 
+          return $(this).closest('.popover-markup').find('.head').html();
         },
         content: function() {
-          return $(this).parent().find('.content').html();
+          return $(this).closest('.popover-markup').find('.content').html();
         }
     });
 
