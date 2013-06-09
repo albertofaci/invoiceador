@@ -1,3 +1,7 @@
+.well-tuned {
+
+}
+
 .subnav .disabled {
 	opacity: 0.4;
 }
@@ -98,7 +102,7 @@ input#invoice_vat_rate {
 	width:100%;
 }
 
-.hero-unit legend {
+.jumbotron h4 {
 	font-weight: bold;
 	font-family: "KaushanScriptRegular";
 }
@@ -143,5 +147,6 @@ ul.basic-list {
 	margin-left: 0;
 }
 
-
-
+.footer {
+	background-color: #333
+}

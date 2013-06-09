@@ -41,8 +41,10 @@ var numberPattern = /^\d+$/;
 function initializeInvoiceadorForm(invoiceProperties) {
 
 
+    if(!$('#invoice_date').val()) {
+        $('#invoice_date').val(getTodayDate());
+    }
 
- 	$('#invoice_date').val(getTodayDate());
     $('.datepicker').datepicker();
 
    /** currency formatting **/
