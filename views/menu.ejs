@@ -27,7 +27,7 @@
 					<div>
 				</li>
 				<li class="popover-markup">
-					<% if(typeof invoiceObject !== 'undefined') { %>	
+					<% if(invoice.public_hash) { %>
    					<a id="popover-share" class="trigger" data-placement="bottom"><i class="icon-share"></i> Share <b class="caret"></b></a> 
    					<div class="head hide">Share</div>
 				    <div class="content hide">
@@ -49,7 +49,7 @@
 				</li>
 <% } %>
 				<li class="dropdown">
-					<% if(typeof invoiceObject !== 'undefined') { %>
+					<% if(invoice.public_hash) { %>
 					<a class="trigger" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
 						<i class="icon-print"></i> Export <b class="caret"></b>
 					</a>
