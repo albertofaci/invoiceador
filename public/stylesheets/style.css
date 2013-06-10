@@ -1,5 +1,11 @@
-.well-tuned {
-
+span.menu-icon {
+	width: 15px;
+	float: left;
+	padding-top: 5px;
+}
+span.menu-caption {
+	position: relative;
+	left: 10;
 }
 
 .subnav .disabled {
