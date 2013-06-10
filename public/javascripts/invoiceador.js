@@ -42,13 +42,30 @@ $(document).ready(function () {
 
 
     /** Save invoice **/
-    $('.save').click(function() {
+    $('.save-action').click(function() {
         var payload = collectPayload(invoiceProperties);
-         $('#payload').val(payload);
+        $('#save-payload').val(payload);
         $('body').fadeOut('fast', function() {
-            $('#myForm').submit();
+            $('#saveForm').submit();
         });
-       
     });
+
+    $('.update-action').click(function() {
+        var payload = collectPayload(invoiceProperties);
+        $('#update-payload').val(payload);
+        $('body').fadeOut('fast', function() {
+            $('#updateForm').submit();
+        });
+    });
+
+    $('.fork-action').click(function() {
+        var payload = collectPayload(invoiceProperties);
+        $('#fork-payload').val(payload);
+        $('body').fadeOut('fast', function() {
+            $('#forkForm').submit();
+        });
+    });
+
+    $('.main-alert').delay(3000).fadeOut('slow');
 
 });

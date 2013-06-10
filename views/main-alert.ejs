@@ -1,0 +1,7 @@
+		<%  if( flash.message != undefined )  { 
+				var message = flash.message.pop();
+		%>
+			<div class="alert pull-left alert-<%= message.class %> main-alert">
+ 				 <%= message.text  %>
+			</div>
+		<% } %>

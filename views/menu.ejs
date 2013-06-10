@@ -1,18 +1,30 @@
 <% if(typeof hash !== "undefined") { %>
-	<form method="post" name="myForm" class="hide" id="myForm" action="/inv/<%= hash %>">
+	<form method="post" name="updateForm" class="hide" id="updateForm" action="/inv/<%= hash %>">
 		<input type="hidden" name="_method" value="put" />
-<% } else { %>
-	<form method="post" name="myForm" id="myForm" action="/inv">
-<% } %>
-		<input type="hidden" name="payload" id="payload">
+		<input type="hidden" name="payload" id="update-payload"/>
 	</form>
+	<form method="post" name="forkForm" id="forkForm" action="/inv">
+		<input type="hidden" name="fork" value="y"/>
+		<input type="hidden" name="payload" id="fork-payload"/>
+	</form>
+<% } else { %>
+	<form method="post" name="saveForm" id="saveForm" action="/inv">
+		<input type="hidden" name="payload" id="save-payload"/>
+	</form>
+<% } %>
+
 
 	<section class="subhead" id="overview">
 		<div class="subnav">
 			<ul class="nav nav-pills">
 				<li class="strong"><a href="/"><img src="/assets/images/bull.svg" style="width: 30px; margin-top: -6px"> Invoiceador!</a></li>
 <% if(display_type === 'EDIT') { %>
-				<li><a href="#" class="save prevent-default"><i class="icon-hdd"></i> Save</a></li>
+		<% if (!invoiceObject.public_hash) { %>
+				<li><a href="#" class="save-action prevent-default"><i class="icon-save"></i> Save</a></li>
+		<% } else { %>
+				<li><a href="#" class="update-action prevent-default"><i class="icon-save"></i> Update</a></li>
+				<li><a href="#" class="fork-action prevent-default"><i class="icon-share-alt"></i> Fork</a></li>
+		<% } %>
 				<li class="popover-markup popover-wide">
 					<a id="popover-options" class="trigger" data-placement="bottom"><i class="icon-wrench"></i> Options <b class="caret"></b></a>
 					<div class="head hide">Options</div>
