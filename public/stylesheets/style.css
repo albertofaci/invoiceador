@@ -1,9 +1,9 @@
 .well {
 	background-color: #fcfcfc
 }
-.invoice.well {
-	border-width: 0;
 
+.invoice {
+	border: 0;
 }
 pre.normal {
 	border-width: 0px;

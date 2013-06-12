@@ -5,7 +5,10 @@
 	<%- include header %>
 
 	<style>
-		.container { max-width: 800px; }
+		.invoice { max-width: 700px; min-height: 920px;  margin: auto;}
+		<% if(!plain) {  %>
+			.invoice { border: 1px solid #bbb; }
+		<% } %>
 	</style>
 
 </head>
@@ -20,8 +23,9 @@
 		<% } %>
 		<%- include invoice-display %>
 	</div>
-
-	<%- include options-modal %>
-
+	<% if(!plain) {  %>
+		<%- include footer %>
+		<%- include options-modal %>
+	<% } %>
 </body>
 </html>
