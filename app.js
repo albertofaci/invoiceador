@@ -57,6 +57,7 @@ app.post('/inv', params.new_hash, params.invoice_payload, dao.save, alerts.saved
 app.get('/inv/:hash', dao.findByPrivateHash, page.render_view); //VIEW AS HTML
 app.put('/inv/:hash',  params.invoice_payload, dao.findByPrivateHash, dao.update, alerts.updated, page.redirect_edit); //UPDATE
 app.get('/inv/:hash/edit', params.base_url, dao.findByPrivateHash, page.render_edit); //EDIT 
+app.get('/inv/:hash/preview', params.base_url, dao.findByPrivateHash, page.render_preview); //EDIT 
 
 app.get('/:hash.pdf', params.pdf, dao.findByPublicHash, pdfExport.render);  //VIEW PUBLIC IN PDF
 app.get('/:hash.json',  dao.findByPublicHash, rest.invoice);  //VIEW PUBLIC

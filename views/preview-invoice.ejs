@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Invoiceador</title>
+
+	<%- include header %>
+
+	<style>
+		.container { max-width: 700px; }
+	</style>
+
+</head>
+<body>
+
+	<input type="hidden" name="hash" id="hash" value="<%= hash %>" />
+
+	<div id="main-container" class="container">
+		<h3>preview for invoice no. <%=invoice.number %></h3>
+		<%- include preview-menu %>
+		<div class="wellx share-well">
+			<ul class="basic-list">
+				<li>
+					<span class="subtitle mini-title">Public URL (read-only)</span>
+					<input type="text" class="select-auto input-large" value="<%=baseUrl %>/<%=invoiceObject.public_hash %>"/>
+				</li>
+				
+				<li>
+					<span class="subtitle mini-title">Private URL (editable)</span>
+					<input type="text" class=" select-auto" value="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+				</li>
+			</ul>
+
+
+		</div>
+
+		<%- include main-alert %>
+		<%- include invoice-display %>
+	</div>
+
+	<%- include options-modal %>
+
+</body>
+</html>

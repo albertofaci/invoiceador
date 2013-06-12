@@ -1,5 +1,34 @@
+.well {
+	background-color: #fcfcfc
+}
+.invoice.well {
+	border-width: 0;
+
+}
+pre.normal {
+	border-width: 0px;
+	background-color: #fcfcfc;
+	font-family: "Lora",Georgia,"Times New Roman",Times,serif;
+}
+
+.share-well .subtitle {
+	float: left;
+	width: 180px;
+	padding-top: 5px;
+	text-align: right;
+	position: relative;
+	bottom: 6px;
+}
+.share-well input.select-auto {
+	position: relative;
+	left: 20px;
+	max-width: 400px;
+	width: 100%;
+	padding-right:10px;
+}
+
 span.menu-icon {
-	width: 15px;
+	width: auto;
 	float: left;
 	padding-top: 5px;
 }

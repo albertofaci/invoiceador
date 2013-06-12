@@ -5,7 +5,7 @@
 	<%- include header %>
 
 	<style>
-		.container { max-width: 700px; }
+		.container { max-width: 800px; }
 	</style>
 
 </head>
@@ -15,9 +15,9 @@
 
 	<div id="main-container" class="container">
 		<% if(!plain) {  %>
-			<%- include menu %>
+			<%- include view-menu %>
+			<%- include main-alert %>
 		<% } %>
-		<%- include main-alert %>
 		<%- include invoice-display %>
 	</div>
 

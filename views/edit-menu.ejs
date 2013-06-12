@@ -18,27 +18,31 @@
 		<div class="subnav">
 			<ul class="nav nav-pills">
 				<li class="strong"><a href="/"><img src="/assets/images/bull.svg" style="width: 30px; margin-top: -6px"> Invoiceador!</a></li>
-<% if(display_type === 'EDIT') { %>
 		<% if (!invoiceObject.public_hash) { %>
 				<li><a href="#" class="save-action prevent-default"><i class="icon-save"></i> Save</a></li>
 		<% } else { %>
-				<li><a href="#" class="update-action prevent-default"><i class="icon-save"></i> Update</a></li>
+				<li><a href="#" class="update-action prevent-default"><i class="icon-save"></i> Save</a></li>
 				<li><a href="#" class="fork-action prevent-default"><i class="icon-code-fork"></i> Fork</a></li>
-		<% } %>
-				<li class="dropdown">
+				<li><a href="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/preview"><i class="icon-eye-open"></i> Preview</a></li>
+
+				<!-- <li class="dropdown">
 					<a class="trigger" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
 						<i class="icon-file"></i> File <b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 						<li><a><span class="menu-icon"><i class="icon-save"></i></span><span class="menu-caption">Save</span></a></li>
 						<li><a><span class="menu-icon"><i class="icon-code-fork"></i></span><span class="menu-caption">Fork</span></a></li>
+						<li><a><span class="menu-icon"><i class="icon-trash"></i></span><span class="menu-caption">Delete</span></a></li>
+					
 						<li><a href="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/preview"><span class="menu-icon"><i class="icon-eye-open"></i></span><span class="menu-caption">Preview to share...</span></a></li>
 						<li class="divider"></li>
-						<li><a><span class="menu-icon"><i class="icon-print menu-icon"></i></span><span class="menu-caption">Print</span></a></li>
+						<!-_- <li><a><span class="menu-icon"><i class="icon-print menu-icon"></i></span><span class="menu-caption">Print</span></a></li> -_->
+				
 					</ul>
-				</li>
+				</li> -->
+			<% } %>
 				<li class="popover-markup popover-wide">
-					<a id="popover-options" class="trigger" data-placement="bottom"><i class="icon-wrench"></i> Options <b class="caret"></b></a>
+					<a id="popover-options" class="trigger" data-placement="bottom"><i class="icon-cogs"></i> Settings <b class="caret"></b></a>
 					<div class="head hide">Options</div>
 					<div class="content hide">
 						<a id="close" data-target="popover-options" class="close popoverclose">&times;</a>	     
@@ -47,46 +51,15 @@
 							<li><span class="subtitle">VAT:</span> <input type="checkbox" id="hasVat" checked="checked"/></li>
 		<!-- 					<li><input type="button" id="saveCompany" class="btn" value="Save Company"/></li>
 							<li><input type="button" id="loadCompany" class="btn" value="Load Company"/></li> -->
+						<% if (invoiceObject.public_hash) { %>	
+							<li class="divider"><hr/></li>
+							<li><a><button class="btn btn-mini"><i class="icon-trash"></i> Delete</button></a>
+						<% } %>
 						</ul>
 					<div>
 				</li>
-				<li class="popover-markup">
-					<% if(invoiceObject.public_hash) { %>
-   					<a id="popover-share" class="trigger" data-placement="bottom"><i class="icon-share"></i> Share <b class="caret"></b></a> 
-   					<div class="head hide">Share</div>
-				    <div class="content hide">
-				       <a id="close" data-target="popover-share" class="close popoverclose">&times;</a>	       
-				       <ul class="basic-list">
-							<li>
-								<label><span class="subtitle">Public URL</span> <small>(editable)</small></label>
-								<input type="text" class="full-width select-auto" value="<%=baseUrl %>/<%=invoiceObject.public_hash %>"/>
-							</li>
-							<li>
-								<label><span class="subtitle">Private URL</span>  <small>(read-only)</small></label>
-								<input type="text" class="full-width select-auto" value="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/edit"/>
-							</li>
-						</ul>
-				    </div>
-			    	<% } else { %>
-						<a id="popover-share" class="disabled" ><i class="icon-share"></i> Share <b class="caret"></b></a> 
-					<% } %>
-				</li>
-<% } %>
-				<li class="dropdown">
-					<% if(invoiceObject.public_hash) { %>
-					<a class="trigger" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
-						<i class="icon-print"></i> Export <b class="caret"></b>
-					</a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				
 
-						<li><a href="/<%=invoiceObject.public_hash %>.html">HTML</a></li>
-						<li><a href="/<%=invoiceObject.public_hash %>.json">JSON</a></li>
-						<li><a href="/<%=invoiceObject.public_hash %>.pdf">PDF</a></li>
-					</ul>
-					<% } else { %>
-					<a class="disabled"><i class="icon-print"></i> Export <b class="caret"></b></a>
-					<% } %>
-				</li>  
 			</ul>
 
 
