@@ -3,12 +3,12 @@
 		<input type="hidden" name="_method" value="put" />
 		<input type="hidden" name="payload" id="update-payload"/>
 	</form>
-	<form method="post" name="forkForm" id="forkForm" action="/inv">
+	<form method="post" name="forkForm" class="hide" id="forkForm" action="/inv">
 		<input type="hidden" name="fork" value="y"/>
 		<input type="hidden" name="payload" id="fork-payload"/>
 	</form>
 <% } else { %>
-	<form method="post" name="saveForm" id="saveForm" action="/inv">
+	<form method="post" name="saveForm" class="hide" id="saveForm" action="/inv">
 		<input type="hidden" name="payload" id="save-payload"/>
 	</form>
 <% } %>
@@ -58,8 +58,11 @@
 						</ul>
 					<div>
 				</li>
-				
-
+				<% if (invoiceObject.public_hash) { %>
+				<li><a>
+					<span class="label" style="font-size: 70%; font-weight: normal"><i class="icon-pencil" ></i> edit</span>
+				</a></li>
+				<% } %>
 			</ul>
 
 

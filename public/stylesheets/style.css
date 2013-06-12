@@ -8,23 +8,40 @@
 pre.normal {
 	border-width: 0px;
 	background-color: #fcfcfc;
-	font-family: "Lora",Georgia,"Times New Roman",Times,serif;
+	font-family: "Lora", Georgia,"Times New Roman",Times,serif;
 }
 
-.share-well .subtitle {
+/*.share-well .subtitle {
 	float: left;
 	width: 180px;
 	padding-top: 5px;
 	text-align: right;
 	position: relative;
 	bottom: 6px;
+}*/
+
+input.smallish[type=text] {
+padding: 9px;
+font-size: 14px;
+line-height: 14px;
+height: 22px;
+display: inline-block;
+margin-bottom: 5px 
+
 }
+
+span.smallish-label {
+	margin-top: 0;
+	line-height: 14px;
+	display: inline-block;
+	font-size: 14px;
+}
+
 .share-well input.select-auto {
-	position: relative;
 	left: 20px;
-	max-width: 400px;
+	max-width: 350px;
 	width: 100%;
-	padding-right:10px;
+	margin-top: 5px;
 }
 
 span.menu-icon {

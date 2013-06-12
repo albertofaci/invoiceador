@@ -5,28 +5,19 @@
 				<li class="strong"><a href="/"><img src="/assets/images/bull.svg" style="width: 30px; margin-top: -6px"> Invoiceador!</a></li>
 				<li><a href="/inv/<%=hash %>/edit"><i class="icon-pencil"></i> Edit</a></li>
 				<li><a href="/<%=invoiceObject.public_hash %>?plain=y&print=y"><i class="icon-print"></i> Print</a></li>
-				<li><a href="/<%=invoiceObject.public_hash %>.pdf"><i class="icon-pinterest-sign"></i> As PDF</a></li>
-
-				<% if(invoiceObject.public_hash) { %>
+				<li><a href="/<%=invoiceObject.public_hash %>.pdf"><i class="icon-download-alt"></i> Get as PDF</a></li>
 				
 				<li class="popover-markup">
    					<a id="popover-share" class="trigger" data-placement="bottom"><i class="icon-share"></i> Share <b class="caret"></b></a> 
    					<div class="head hide">Share</div>
 				    <div class="content hide">
-				       <a id="close" data-target="popover-share" class="close popoverclose">&times;</a>	       
-				       <ul class="basic-list">
-							<li>
-								<label><span class="subtitle">Public URL</span> <small>(editable)</small></label>
-								<input type="text" class="full-width select-auto" value="<%=baseUrl %>/<%=invoiceObject.public_hash %>"/>
-							</li>
-							<li>
-								<label><span class="subtitle">Private URL</span>  <small>(read-only)</small></label>
-								<input type="text" class="full-width select-auto" value="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/edit"/>
-							</li>
-						</ul>
+				       <p>TODO</p>
 				    </div>
 				</li>
-				<% } %>
+				<li><a>
+					<span class="label label-info" style="font-size: 70%; font-weight: normal"><i class="icon-eye-open icon-white" ></i> preview</span>
+				</a></li>
+
 			</ul>
 
 

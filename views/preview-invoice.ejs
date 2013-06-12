@@ -7,7 +7,7 @@
 	<style>
 		.invoice { max-width: 700px; min-height: 1120px; margin: auto;}
 		.invoice { border: 1px solid #bbb; }
-		.share-well { max-width: 700px; margin: auto;}
+		/*.share-well { max-width: 700px; margin: auto;}*/
 	</style>
 
 </head>
@@ -16,23 +16,31 @@
 	<input type="hidden" name="hash" id="hash" value="<%= hash %>" />
 
 	<div id="main-container" class="container">
-		<h3>preview for invoice no. <%=invoice.number %></h3>
+
 		<%- include preview-menu %>
+		<p><small>Preview for invoice no. <%=invoice.number %> of <%=invoice.date%></small></p>
 		<div class="wellx share-well">
 			<ul class="basic-list">
 				<li>
-					<span class="subtitle mini-title">Public URL (read-only)</span>
-					<input type="text" class="select-auto input-large" value="<%=baseUrl %>/<%=invoiceObject.public_hash %>"/>
+					<input type="text" class="select-auto smallish input-large" value="<%=baseUrl %>/<%=invoiceObject.public_hash %>"/>
+					 <span class="smallish-label">Public URL (to share)</span>
+					
 				</li>
 				
 				<li>
-					<span class="subtitle mini-title">Private URL (editable)</span>
-					<input type="text" class=" select-auto" value="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+					<input type="text" class=" select-auto smallish input-large" value="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/edit"/>
+					 <span class="smallish-label">Private URL (to edit)</span>
+					
+					
 				</li>
+
 			</ul>
 
 
 		</div>
+		<hr/>
+
+
 
 		<%- include main-alert %>
 		<%- include invoice-display %>
