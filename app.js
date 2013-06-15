@@ -33,10 +33,10 @@ app.configure(function() {
     app.set('view engine', 'ejs');
     app.set('view options', { layout: false });
 
-   	app.use(function(err, req, res, next) {
-	  console.log(err);
-	  next();
-	});
+ //   	app.use(function(err, req, res, next) {
+	//   console.log(err);
+	//   next();
+	// });
 	app.use(errors);
 		
 
