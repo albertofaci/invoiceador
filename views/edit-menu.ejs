@@ -7,6 +7,9 @@
 		<input type="hidden" name="fork" value="y"/>
 		<input type="hidden" name="payload" id="fork-payload"/>
 	</form>
+	<form method="post" name="deleteForm" class="hide" id="deleteForm" action="/inv/<%= hash %>">
+		<input type="hidden" name="_method" value="delete" />
+	</form>
 <% } else { %>
 	<form method="post" name="saveForm" class="hide" id="saveForm" action="/inv">
 		<input type="hidden" name="payload" id="save-payload"/>
@@ -24,6 +27,7 @@
 				<li><a href="#" class="update-action prevent-default"><i class="icon-save"></i> Save</a></li>
 				<li><a href="#" class="fork-action prevent-default"><i class="icon-code-fork"></i> Fork</a></li>
 				<li><a href="<%=baseUrl %>/inv/<%=invoiceObject.private_data.hash %>/preview"><i class="icon-eye-open"></i> Preview</a></li>
+
 
 				<!-- <li class="dropdown">
 					<a class="trigger" id="dLabel" role="button" data-toggle="dropdown" data-target="" >
@@ -53,7 +57,7 @@
 							<li><input type="button" id="loadCompany" class="btn" value="Load Company"/></li> -->
 						<% if (invoiceObject.public_hash) { %>	
 							<li class="divider"><hr/></li>
-							<li><a><button class="btn btn-mini"><i class="icon-trash"></i> Delete</button></a>
+							<li><a role="button" href="#modal-delete-invoice" class="confirm-delete btn btn-mini" data-toggle="modal"><i class="icon-trash"></i> Delete</a></li>
 						<% } %>
 						</ul>
 					<div>
@@ -69,4 +73,20 @@
 		</div>
 
 	</section>
+
+	<div id="modal-delete-invoice" class="modal hide fade">
+	    <div class="modal-header">
+	        <a href="#" class="close cancel-delete-invoice">&times;</a>
+	         <h3>Delete Invoice</h3>
+	    </div>
+	    <div class="modal-body">
+	        <p>You are about to delete your invoice number <strong><%=invoice.number %></strong> of <%= invoice.date %>. This procedure is irreversible.</p>
+	        <p>Do you want to proceed?</p>
+	        <p id="debug-url"></p>
+	    </div>
+	    <div class="modal-footer">
+	    	<button id="cancel-delete-invoice" class="cancel-delete-invoice' btn secondary">Cancel</button>
+	        <button class="delete-action btn btn-danger"><i class="icon-trash delete-action"></i> Delete</button>
+	    </div>
+	</div>
 

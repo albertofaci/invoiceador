@@ -66,6 +66,21 @@ $(document).ready(function () {
         });
     });
 
+
+    $(this).delegate('.delete-action', 'click', function() {
+        alert('clicked')
+        $('body').fadeOut('fast', function() {
+            $('#deleteForm').submit();
+        });
+    });
+
+    $(this).delegate('.cancel-delete-invoice', 'click', function() {
+        $('#modal-delete-invoice').modal('hide');
+        $('#popover-options').popover('hide');
+    })
+
     $('.main-alert').delay(3000).fadeOut('slow');
 
+    
 });
+

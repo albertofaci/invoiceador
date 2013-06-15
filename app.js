@@ -56,6 +56,7 @@ app.get('/', page.index); // EDIT UNSAVED
 app.post('/inv', params.new_hash, params.invoice_payload, dao.save, alerts.saved, page.redirect_edit) // SAVE NEW
 app.get('/inv/:hash', dao.findByPrivateHash, page.render_view); //VIEW AS HTML
 app.put('/inv/:hash',  params.invoice_payload, dao.findByPrivateHash, dao.update, alerts.updated, page.redirect_edit); //UPDATE
+app.delete('/inv/:hash', dao.findByPrivateHash, dao.delete, alerts.deleted, page.redirect_index)
 app.get('/inv/:hash/edit', params.base_url, dao.findByPrivateHash, page.render_edit); //EDIT 
 app.get('/inv/:hash/preview', params.base_url, dao.findByPrivateHash, page.render_preview); //EDIT 
 
