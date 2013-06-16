@@ -10,7 +10,7 @@ var http = require('http')
 var dao  = (require('./lib/dao.js'))(mongoUrl);
 var rest = require('./lib/rest.js');
 var params =  require('./lib/params.js');
-var page = require('./lib/mvc-action.js');
+var action = require('./lib/mvc-action.js');
 var alerts = require('./lib/alerts.js');
 var pdfExport = require('./lib/pdf-export.js');
 //var cookies = require('./lib/invoiceCookie.js');
@@ -51,18 +51,52 @@ app.get('/favicon.ico', function(req, res) { res.status(499); });  //FAVICON
 app.param("hash", params.hash);
 app.param("cookieName", params.cookieName)
 
-//ROUTING - PAGE
-app.get('/', page.index); // EDIT UNSAVED
-app.post('/inv', params.new_hash, params.invoice_payload, dao.save, alerts.saved, page.redirect_edit) // SAVE NEW
-app.get('/inv/:hash', dao.findByPrivateHash, page.render_view); //VIEW AS HTML
-app.put('/inv/:hash',  params.invoice_payload, dao.findByPrivateHash, dao.update, alerts.updated, page.redirect_edit); //UPDATE
-app.delete('/inv/:hash', dao.findByPrivateHash, dao.delete, alerts.deleted, page.redirect_index)
-app.get('/inv/:hash/edit', params.base_url, dao.findByPrivateHash, page.render_edit); //EDIT 
-app.get('/inv/:hash/preview', params.base_url, dao.findByPrivateHash, page.render_preview); //EDIT 
+//ROUTING - action
+app.get('/', action.index); // EDIT UNSAVED
 
-app.get('/:hash.pdf', params.pdf, dao.findByPublicHash, pdfExport.render);  //VIEW PUBLIC IN PDF
-app.get('/:hash.json',  dao.findByPublicHash, rest.invoice);  //VIEW PUBLIC
-app.get('/:hash.:ext?', dao.findByPublicHash, page.render_view);  //VIEW PUBLIC
+app.post('/inv', 
+	params.new_hash, params.invoice_payload, 
+	dao.save, 
+	alerts.saved, 
+	action.redirect_edit); //SAVE NEW
+
+app.get('/inv/:hash', 
+	dao.findByPrivateHash, 
+	action.render_view); //VIEW AS HTML
+
+app.put('/inv/:hash',  
+	params.invoice_payload, 
+	dao.findByPrivateHash, dao.update, 
+	alerts.updated, 
+	action.redirect_edit); //UPDATE
+
+app.delete('/inv/:hash', 
+	dao.findByPrivateHash, dao.delete, 
+	alerts.deleted, 
+	action.redirect_index) // DELETE
+
+app.get('/inv/:hash/edit', 
+	params.base_url, 
+	dao.findByPrivateHash, 
+	action.render_edit); //EDIT 
+
+app.get('/inv/:hash/preview', 
+	params.base_url, 
+	dao.findByPrivateHash, 
+	action.render_preview); //EDIT 
+
+app.get('/:hash.pdf', 
+	params.pdf, 
+	dao.findByPublicHash, 
+	pdfExport.render);  //VIEW PUBLIC IN PDF
+
+app.get('/:hash.json',  
+	dao.findByPublicHash, 
+	rest.invoice);  //VIEW PUBLIC IN JSON (todo: move to API)
+
+app.get('/:hash.:ext?', 
+	dao.findByPublicHash, 
+	action.render_view);  //VIEW PUBLIC
 
 //ROUTING - COOKIE-SAVED VALUES
 //app.get('/saved-details/:cookieName', cookies.authorised_cookies, cookies.get);
