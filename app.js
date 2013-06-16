@@ -7,15 +7,15 @@ var express = require("express");
 var app = express()
 var ejs = require('ejs');
 var http = require('http')
-var dao  = (require('./lib/invoiceDao.js'))(mongoUrl);
-var rest = require('./lib/invoiceRest.js');
-var params =  require('./lib/invoiceParams.js');
-var page = require('./lib/invoicePage.js');
-var alerts = require('./lib/invoiceAlerts.js');
-var pdfExport = require('./lib/pdfExport.js');
+var dao  = (require('./lib/dao.js'))(mongoUrl);
+var rest = require('./lib/rest.js');
+var params =  require('./lib/params.js');
+var page = require('./lib/mvc-action.js');
+var alerts = require('./lib/alerts.js');
+var pdfExport = require('./lib/pdf-export.js');
 //var cookies = require('./lib/invoiceCookie.js');
-var errors = require('./lib/invoiceErrorHandling.js');
-var exp_extensions = require('./lib/expressExtensions.js');
+var errors = require('./lib/error-handling.js');
+var exp_extensions = require('./lib/express-extensions.js');
 var flashify = require('flashify');
 
 exp_extensions.apply(app);
