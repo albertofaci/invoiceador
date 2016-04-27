@@ -8,6 +8,11 @@
 	},	
 	"dependencies": {
 		 "mongodb" : "1.1.11",
-		 "mongoose": "~4.2.7"
+		 "mongoose": "~4.2.7",
+		 "express": "3.x.x",
+		 "ejs" : "2.4.1",
+		 "shortid" : "2.2.6",
+		 "phantom" : "2.0.10",
+		 "flashify" : "0.1.2"
 	}
 }
